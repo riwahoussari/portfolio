@@ -1,0 +1,148 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #000000;
+  --accent: #fd2c2a;
+
+  --desktop-margin: 56px;
+  --desktop-gutter: 40px;
+  --tablet-margin: 48px;
+  --tablet-gutter: 32px;
+  --mobile-margin: 24px;
+  --mobile-gutter: 14px;
+}
+
+@theme inline {
+  --breakpoint-xs: 30rem;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-accent: var(--accent);
+  --font-general-sans: var(--font-general-sans);
+  --font-neue-montreal: var(--font-neue-montreal);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #000;
+    --foreground: #fff;
+    --accent: #fd2c2a;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --background: #fff;
+    --foreground: #000;
+    --accent: #fd2c2a;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-general-sans), system-ui, -apple-system, sans-serif;
+}
+
+/* SPACING */
+
+.side-padding {
+  @apply px-[padding-inline:var(--mobile-margin)] md:[padding-inline:var(--tablet-margin)] xl:[padding-inline:var(--desktop-margin)];
+}
+
+.grid-system {
+  /* side padding */
+  @apply px-[padding-inline:var(--mobile-margin)] md:[padding-inline:var(--tablet-margin)] xl:[padding-inline:var(--desktop-margin)];
+
+  /* columns */
+  @apply grid grid-cols-4 md:grid-cols-8 xl:grid-cols-12;
+
+  /* gutter/gap */
+  @apply gap-[var(--mobile-gutter)] md:gap-[var(--tablet-gutter)] xl:gap-[var(--desktop-gutter)];
+}
+
+/* FONTS */
+.display-1 {
+  font-family: var(--font-neue-montreal);
+  font-weight: 500;
+  line-height: 90%;
+  @apply text-[max(64px,min(10.41vw,180px))];
+}
+
+.display-1.spaced {
+  letter-spacing: 0.1vw;
+  word-spacing: 2vw;
+}
+
+.h1-regular {
+  font: var(--font-neue-montreal);
+  line-height: 120%;
+  @apply text-[40px] md:text-[52px] xl:text-[64px];
+}
+
+.h1-medium {
+  font: var(--font-neue-montreal);
+  line-height: 120%;
+  font-weight: 500;
+  @apply text-[40px] md:text-[52px] xl:text-[56px] 2xl:text-[64px];
+}
+
+.h2-light {
+  font: var(--font-neue-montreal);
+  line-height: 120%;
+  font-weight: 300;
+  @apply text-[26px] xs:text-[32px] md:text-[45px] xl:text-[56px];
+}
+
+.h2-regular {
+  font: var(--font-neue-montreal);
+  line-height: 120%;
+  font-weight: 400;
+  @apply text-[26px] xs:text-[32px] md:text-[45px] xl:text-[56px];
+}
+
+.h4-regular {
+  font: var(--font-neue-montreal);
+  line-height: 120%;
+  @apply text-[20px] md:text-[26px] xl:text-[32px];
+}
+
+.h4-light {
+  font: var(--font-neue-montreal);
+  line-height: 120%;
+  font-weight: 300;
+  @apply text-[20px] md:text-[26px] xl:text-[32px];
+}
+
+.navlink {
+  font-family: var(--font-general-sans);
+  line-height: 120%;
+  font-weight: 600;
+}
+
+.body-1 {
+  line-height: 120%;
+  font-family: var(--font-general-sans);
+  @apply text-[26px] md:text-[32px];
+}
+
+.body-3 {
+  line-height: 120%;
+  font-family: var(--font-general-sans);
+  @apply text-base md:text-xl;
+}
+.body-3.spaced {
+  letter-spacing: 1px;
+}
+
+.before-blur-bg::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: url('/arthyl-banner.png'); /* You need to use a static image path here */
+    background-size: cover;
+    background-position: center;
+    filter: blur(15px);
+    transform: scale(1.1);
+    z-index: 0;
+  }
