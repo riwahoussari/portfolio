@@ -1,10 +1,82 @@
 "use client";
 import { useScroll, useTransform, motion, useMotionValue } from "motion/react";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function Works() {
+  ///////////////////////////// update video clip path inset based on aspect ratio
+
+  const [vid1Inset, setVid1Inset] = useState("inset(50% 0% 50% 0%)");
+  const [vid2Inset, setVid2Inset] = useState("inset(50% 0% 50% 0%)");
+  const videoRef1 = useRef<HTMLVideoElement>(null);
+  const videoRef2 = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const updateInset1 = () => {
+      const screenAspect = window.innerWidth / window.innerHeight;
+
+      const video1 = videoRef1.current;
+      if (!video1 || !video1.videoWidth || !video1.videoHeight) return;
+
+      const video1Aspect = video1.videoWidth / video1.videoHeight;
+
+      if (screenAspect > video1Aspect) {
+        // Screen is wider → crop sides
+        setVid1Inset("inset(0% 50% 0% 50%)");
+      } else {
+        // Screen is taller → crop top/bottom
+        setVid1Inset("inset(50% 0% 50% 0%)");
+      }
+    };
+    const updateInset2 = () => {
+      const screenAspect = window.innerWidth / window.innerHeight;
+
+      const video2 = videoRef2.current;
+      if (!video2 || !video2.videoWidth || !video2.videoHeight) return;
+
+      const video2Aspect = video2.videoWidth / video2.videoHeight;
+
+      if (screenAspect > video2Aspect) {
+        // Screen is wider → crop sides
+        setVid2Inset("inset(0% 50% 0% 50%)");
+      } else {
+        // Screen is taller → crop top/bottom
+        setVid2Inset("inset(50% 0% 50% 0%)");
+      }
+    };
+
+    const video1 = videoRef1.current;
+
+    if (video1 && video1.readyState >= 1) {
+      // metadata already loaded
+      updateInset1();
+    } else {
+      video1?.addEventListener("loadedmetadata", updateInset1);
+    }
+
+    window.addEventListener("resize", updateInset1);
+
+    const video2 = videoRef2.current;
+
+    if (video2 && video2.readyState >= 1) {
+      // metadata already loaded
+      updateInset2();
+    } else {
+      video2?.addEventListener("loadedmetadata", updateInset2);
+    }
+
+    window.addEventListener("resize", updateInset2);
+
+    return () => {
+      video1?.removeEventListener("loadedmetadata", updateInset1);
+      window.removeEventListener("resize", updateInset1);
+      video2?.removeEventListener("loadedmetadata", updateInset2);
+      window.removeEventListener("resize", updateInset2);
+    };
+  }, []);
+
+  //////////////////////////////////////  VIDEO 1
   const video1Ref = useRef(null);
-  const { scrollYProgress: video1Scroll } = useScroll({
+  const { scrollYProgress: video1Scroll1 } = useScroll({
     target: video1Ref,
     offset: ["-100vh start", "start start"],
   });
@@ -15,74 +87,249 @@ export default function Works() {
   });
 
   // Scale down from 1 to 0.65
-  const scaleDown = useTransform(video1Scroll, [0, 1], [1, 0.65]);
+  const scaleDown1 = useTransform(video1Scroll1, [0, 1], [1, 0.65]);
+  const scaleDown1ClipPath = useTransform(
+    video1Scroll1,
+    [0, 1],
+    ["inset(0% 0% 0% 0%)", vid1Inset]
+  );
+
   // Scale up back from 0.65 to 1
-  const scaleUp = useTransform(video1Scroll2, [0, 1], [0.65, 1]);
+  const scaleUp1 = useTransform(video1Scroll2, [0, 1], [0.65, 1]);
+  const scaleUp1ClipPath = useTransform(
+    video1Scroll2,
+    [0, 1],
+    [vid1Inset, "inset(0% 0% 0% 0%)"]
+  );
 
   // Final scale to apply to the element
-  const finalScale = useMotionValue(1);
+  const finalScale1 = useMotionValue(1);
+  const finalClipPath1 = useMotionValue("inset(0% 0% 0% 0%)");
 
   // Update final scale based on the two transforms
   useEffect(() => {
-    const unsubscribe1 = scaleDown.on("change", (v) => finalScale.set(v));
-    const unsubscribe2 = scaleUp.on("change", (v) => finalScale.set(v));
+    const unsubscribe11 = scaleDown1.on("change", (v) => finalScale1.set(v));
+    const unsubscribe12 = scaleUp1.on("change", (v) => finalScale1.set(v));
+    const unsubscribe21 = scaleDown1ClipPath.on("change", (v) =>
+      finalClipPath1.set(v)
+    );
+    const unsubscribe22 = scaleUp1ClipPath.on("change", (v) =>
+      finalClipPath1.set(v)
+    );
+
     return () => {
-      unsubscribe1();
-      unsubscribe2();
+      unsubscribe11();
+      unsubscribe12();
+      unsubscribe21();
+      unsubscribe22();
     };
-  }, [scaleDown, scaleUp, finalScale]);
+  }, [
+    scaleDown1,
+    scaleUp1,
+    finalScale1,
+    scaleDown1ClipPath,
+    scaleUp1ClipPath,
+    finalClipPath1,
+  ]);
+
+  /////////////////////////////////////  VIDEO 2
+
+  const video2Ref = useRef(null);
+  const { scrollYProgress: video2Scroll1 } = useScroll({
+    target: video2Ref,
+    offset: ["400vh start", "500vh start"],
+  });
+
+  const { scrollYProgress: video2Scroll2 } = useScroll({
+    target: video2Ref,
+    offset: ["end 0vh", "end -100vh"],
+  });
+
+  // Scale down from 1 to 0.65
+  const scaleDown2 = useTransform(video2Scroll1, [0, 1], [1, 0.65]);
+  const scaleDown2ClipPath = useTransform(
+    video2Scroll1,
+    [0, 1],
+    ["inset(0% 0% 0% 0%)", vid2Inset]
+  );
+
+  // Scale up back from 0.65 to 1
+  const scaleUp2 = useTransform(video2Scroll2, [0, 1], [0.65, 1]);
+  const scaleUp2ClipPath = useTransform(
+    video2Scroll2,
+    [0, 1],
+    [vid2Inset, "inset(0% 0% 0% 0%)"]
+  );
+
+  // Final scale to apply to the element
+  const finalScale2 = useMotionValue(1);
+  const finalClipPath2 = useMotionValue("inset(0% 0% 0% 0%)");
+
+  // Update final scale based on the two transforms
+  useEffect(() => {
+    const unsubscribe11 = scaleDown2.on("change", (v) => finalScale2.set(v));
+    const unsubscribe12 = scaleUp2.on("change", (v) => finalScale2.set(v));
+    const unsubscribe21 = scaleDown2ClipPath.on("change", (v) =>
+      finalClipPath2.set(v)
+    );
+    const unsubscribe22 = scaleUp2ClipPath.on("change", (v) =>
+      finalClipPath2.set(v)
+    );
+
+    return () => {
+      unsubscribe11();
+      unsubscribe12();
+      unsubscribe21();
+      unsubscribe22();
+    };
+  }, [
+    scaleDown2,
+    scaleUp2,
+    finalScale2,
+    scaleDown2ClipPath,
+    scaleUp2ClipPath,
+    finalClipPath2,
+  ]);
 
   return (
-    <section className="translate-y-[-]">
+    <section className="">
       {/* title */}
       <div
-        className="z-1 relative h-[200vh]"
+        className="z-2 relative h-[200vh]"
         style={{ clipPath: "inset(0 0 100vh 0)" }}
       >
-        <div className="grid-system bg-background sticky top-0 flex h-dvh items-center">
-          <div className="relative col-span-10">
-            <h2 className="display-1 flex flex-col whitespace-pre">
-              <span>SELECTED</span> <span className="text-right">WORKS</span>
+        <div className="grid-system bg-background sticky top-0 flex h-dvh items-center overflow-hidden">
+          <div className="relative col-span-7 max-sm:-translate-y-1/2 xl:col-span-10">
+            <h2 className="display-1 text-[max(64px,10.41vw)]! max-2xs:text-[50px]! flex flex-col whitespace-pre">
+              <span>SELECTED</span>{" "}
+              <span className="mt-2 text-right">WORKS</span>
             </h2>
-            <p className="body-1 absolute bottom-0 left-0 w-2/5">
+            <p className="text-[max(18px,2vw)]! body-1 absolute left-0 top-[125%] w-[min(250px,80%)] opacity-80 sm:top-[65%] sm:w-[40%]">
               Some opportunities and projects that I’m proud of!
             </p>
           </div>
         </div>
       </div>
 
-      <div
-        ref={video1Ref}
-        className="z-0 h-[750vh] -translate-y-[200vh]"
-        style={{ clipPath: "inset(0 0 100vh 0)" }}
-      >
-        <motion.div
-          style={{ scale: finalScale }}
-          className="before-blur-bg sticky top-[200vh] w-full overflow-hidden"
+      {/* arthyl */}
+      <div className="z-1 absolute -translate-y-[200vh]">
+        <div
+          ref={video1Ref}
+          className="z-1 bg-background relative h-[500vh] sm:h-[600vh] lg:h-[min(700vh,750vw)]"
+          style={{ clipPath: "inset(0 0 100vh 0)" }}
         >
-          <video
-            src="/arthyl-screen-recording.mp4"
-            className="z-1 relative h-dvh w-dvw object-contain"
-            autoPlay
-            loop
-          ></video>
-        </motion.div>
+          <motion.div
+            style={{ scale: finalScale1 }}
+            className="sticky top-[200vh] w-full overflow-hidden"
+          >
+            <div className="z-1 relative h-dvh w-full">
+              <motion.div
+                style={{ clipPath: finalClipPath1 }}
+                className="z-1 absolute min-h-dvh min-w-full object-cover blur-lg brightness-75"
+              >
+                <video
+                  src="/arthyl-screen-recording.mp4"
+                  className="min-h-dvh min-w-full object-cover"
+                  autoPlay
+                  muted
+                  loop
+                ></video>
+              </motion.div>
+              <div className="z-1 absolute flex h-dvh w-full items-stretch justify-center">
+                <video
+                  ref={videoRef1}
+                  src="/arthyl-screen-recording.mp4"
+                  className="max-h-dvh object-contain"
+                  autoPlay
+                  muted
+                  loop
+                  onLoadedMetadata={(e) => {
+                    const video = e.currentTarget;
+                    video.style.width = `${video.videoWidth}px`;
+                    video.style.height = `${video.videoHeight}px`;
+                  }}
+                ></video>
+              </div>
+            </div>
+          </motion.div>
 
-        <div className="z-100 relative translate-y-[200vh] mix-blend-difference">
-          <h2 className="display-1 side-padding mb-[100vh] text-right">
-            ARTHYL.COM
-          </h2>
-          <p className="grid-system">
-            <span className="col-span-4">
-              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nobis
-              repellendus voluptatem voluptates excepturi nam. Impedit
-              reprehenderit modi totam delectus, ut a eum tempora quam omnis,
-              maiores vero molestiae labore, consequatur assumenda accusamus
-              blanditiis cum. Dolor tempora ducimus impedit nesciunt quod
-              similique magni sapiente sint! Nisi fugit provident iste
-              perspiciatis autem.
-            </span>
-          </p>
+          <div className="z-100 relative translate-y-[100vh] text-white mix-blend-difference sm:translate-y-[150vh] lg:translate-y-[min(200vh,200vw)]">
+            <h2 className="display-1 text-[max(64px,10.41vw)]! max-xs:text-[12vw]! side-padding mb-[50vh] text-right md:mb-[min(60vh,60vw)] xl:mb-[min(80vh,80vw)]">
+              ARTHYL.COM
+            </h2>
+            <p className="grid-system text-[max(16px,1.6vw)]!">
+              <span className="col-span-4 max-md:max-w-[485px] md:min-w-[485px] xl:col-span-5">
+                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nobis
+                repellendus voluptatem voluptates excepturi nam. Impedit
+                reprehenderit modi totam delectus, ut a eum tempora quam omnis,
+                maiores vero molestiae labore, consequatur assumenda accusamus
+                blanditiis cum. Dolor tempora ducimus impedit nesciunt quod
+                similique magni sapiente sint! Nisi fugit provident iste
+                perspiciatis autem.
+              </span>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* haifaa bitar */}
+      <div className="absolute -translate-y-[-300vh]">
+        <div
+          ref={video2Ref}
+          className="relative z-0 h-[500vh] sm:h-[600vh] lg:h-[min(700vh,750vw)]"
+          style={{ clipPath: "inset(0 0 100vh 0)" }}
+        >
+          <motion.div
+            style={{ scale: finalScale2 }}
+            className="sticky top-[-300vh] w-full overflow-hidden"
+          >
+            <div className="z-1 relative h-dvh w-full">
+              <motion.div
+                style={{ clipPath: finalClipPath2 }}
+                className="z-1 absolute min-h-dvh min-w-full object-cover blur-lg brightness-75"
+              >
+                <video
+                  src="/haifaa-bitar-screen-recording.mp4"
+                  className="min-h-dvh min-w-full object-cover"
+                  autoPlay
+                  muted
+                  loop
+                ></video>
+              </motion.div>
+              <div className="z-1 absolute flex h-dvh w-full items-stretch justify-center">
+                <video
+                  ref={videoRef2}
+                  src="/haifaa-bitar-screen-recording.mp4"
+                  className="max-h-dvh object-contain"
+                  autoPlay
+                  muted
+                  loop
+                  onLoadedMetadata={(e) => {
+                    const video = e.currentTarget;
+                    video.style.width = `${video.videoWidth}px`;
+                    video.style.height = `${video.videoHeight}px`;
+                  }}
+                ></video>
+              </div>
+            </div>
+          </motion.div>
+
+          <div className="z-100 relative translate-y-[100vh] text-white mix-blend-difference sm:translate-y-[150vh] lg:translate-y-[min(200vh,200vw)]">
+            <h2 className="display-1 text-[max(52px,9vw)]! max-xs:text-[10vw]! side-padding mb-[50vh] text-right md:mb-[min(60vh,60vw)] xl:mb-[min(80vh,80vw)]">
+              HAIFAABITAR.COM
+            </h2>
+            <p className="grid-system text-[max(16px,1.6vw)]!">
+              <span className="col-span-4 max-md:max-w-[485px] md:min-w-[485px] xl:col-span-5">
+                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nobis
+                repellendus voluptatem voluptates excepturi nam. Impedit
+                reprehenderit modi totam delectus, ut a eum tempora quam omnis,
+                maiores vero molestiae labore, consequatur assumenda accusamus
+                blanditiis cum. Dolor tempora ducimus impedit nesciunt quod
+                similique magni sapiente sint! Nisi fugit provident iste
+                perspiciatis autem.
+              </span>
+            </p>
+          </div>
         </div>
       </div>
     </section>

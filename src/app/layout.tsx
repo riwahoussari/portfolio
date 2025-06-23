@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import Navbar from "./components/Navbar/Navbar";
 import LenisScrollWrapper from "./components/Global/LenisScrollWrapper";
+import { ThemeProvider } from "next-themes";
 
 export const neueMontreal = localFont({
   src: [
@@ -59,19 +60,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning >
       <body
         className={`${generalSans.variable} ${neueMontreal.className} antialiased`}
+        
       >
-        <div className="bg-purple-600 h-1 w-10 fixed top-0 left-0 z-10000"></div>
-        <div className="bg-purple-600 h-1 w-10 fixed top-1/4 -translate-y-1/2 left-0 z-10000"></div>
-        <div className="bg-purple-600 h-1 w-10 fixed top-1/2 -translate-y-1/2 left-0 z-10000"></div>
-        <div className="bg-purple-600 h-1 w-10 fixed top-3/4 -translate-y-1/2 left-0 z-10000"></div>
-        <div className="bg-purple-600 h-1 w-10 fixed bottom-0 left-0 z-10000"></div>
-        <LenisScrollWrapper>
-          <Navbar />
-          <main>{children}</main>
-        </LenisScrollWrapper>
+        <ThemeProvider attribute="class" defaultTheme="system">
+          <LenisScrollWrapper>
+            <Navbar />
+            <main >{children}</main>
+          </LenisScrollWrapper>
+        </ThemeProvider>
       </body>
     </html>
   );
