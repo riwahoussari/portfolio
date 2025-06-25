@@ -65,14 +65,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning >
+    <html lang="en" suppressHydrationWarning>
       <body
         className={`${generalSans.variable} ${neueMontreal.className} antialiased`}
-        
       >
         <ThemeProvider attribute="class" defaultTheme="system">
           <LenisScrollWrapper>
-            <Navbar/>
+            <Navbar />
             <main>{children}</main>
           </LenisScrollWrapper>
         </ThemeProvider>

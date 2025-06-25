@@ -5,12 +5,13 @@ import {
   motion,
   useMotionValueEvent,
   useMotionValue,
+  useInView,
 } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 
 const SKILLS = [
   {
-    title: "Web Design",
+    words: ["Web", "Design"],
     list: [
       "Figma",
       "Animations",
@@ -21,11 +22,11 @@ const SKILLS = [
     ],
   },
   {
-    title: "Frontend Development",
+    words: ["Frontend", "Development"],
     list: ["Nextjs", "React", "Framer Motion", "Webflow", "Gsap", "Tailwind"],
   },
   {
-    title: "Backend Development",
+    words: ["Backend", "Development"],
     list: ["Nodejs", "Django", "Flask", "MongoDB", "MySQL", "APIs"],
   },
 ];
@@ -92,6 +93,13 @@ export default function Services() {
     [0, 1],
     ["inset(100% 0 0 0)", "inset(0% 0 0 0)"]
   );
+
+  const refs = [useRef(null), useRef(null), useRef(null)];
+  const isInViews = [
+    useInView(refs[0], { once: false }),
+    useInView(refs[1], { once: false }),
+    useInView(refs[2], { once: false }),
+  ];
 
   return (
     <section id="services" ref={sectionRef} className="relative md:mt-[25vh]">
@@ -204,28 +212,61 @@ export default function Services() {
 
       {/* Services */}
       <div className="z-2 relative ms-auto mt-[20vh] grid pb-[min(33vh,20vw)] max-lg:pb-[100vh] lg:w-2/3 xl:w-[60%] 2xl:w-1/2">
-        <div className="bg-background absolute h-dvh left-0 right-0 top-0 lg:hidden" />
+        <div className="bg-background absolute left-0 right-0 top-0 h-dvh lg:hidden" />
 
         <motion.div
           style={{ clipPath: clipPathIn }}
           className="side-padding bg-background relative pt-[max(150px,13vh)] sm:pt-[max(300px,25vh)] lg:pt-0"
         >
-          {SKILLS.map((skill) => (
+          {SKILLS.map((skill, i) => (
             <div
-              key={skill.title}
+              ref={refs[i]}
+              key={skill.words[0]}
               className="mb-[max(150px,13vh)] sm:mb-[max(300px,25vh)] lg:mb-[33vh]"
             >
-              <h3 className="display-1 md:text-[max(72px,6vw)]! text-[max(8vw,44px)]!">
-                {skill.title}
+              <h3 className="display-1 md:text-[max(72px,6vw)]! text-[max(8vw,44px)]! flex flex-wrap">
+                {skill.words.map((word, k) => (
+                  <span key={k} className="inline-block whitespace-pre">
+                    {word.split("").map((letter, l) => (
+                      <motion.span
+                        initial={{ y: "30%", rotateX: "60deg" }}
+                        animate={
+                          isInViews[i]
+                            ? { y: "0", rotateX: "0deg" }
+                            : { y: "30%", rotateX: "60deg" }
+                        }
+                        transition={{
+                          duration: 0.3,
+                          delay:
+                            k === 0
+                              ? 0.03 * l
+                              : 0.03 * (l + skill.words[0].length),
+                          ease: "easeInOut",
+                        }}
+                        key={l}
+                        className="inline-block"
+                      >
+                        {letter}
+                      </motion.span>
+                    ))}{" "}
+                  </span>
+                ))}
               </h3>
               <div className="xs:gap-5 mt-10 flex flex-wrap gap-4 md:gap-6">
-                {skill.list.map((item) => (
-                  <p
+                {skill.list.map((item, j) => (
+                  <motion.p
                     key={item}
                     className="md:text-[max(30px,2vw)]! xs:text-[24px]! border-foreground xs:px-5 rounded-[10px] border-2 px-4 py-2 text-[20px] sm:rounded-xl md:px-6 md:py-3"
+                    initial={{ opacity: 0 }}
+                    animate={isInViews[i] ? { opacity: 1 } : { opacity: 0 }}
+                    transition={{
+                      duration: 0.3,
+                      ease: "easeInOut",
+                      delay: 0.2 + j * 0.15,
+                    }}
                   >
                     {item}
-                  </p>
+                  </motion.p>
                 ))}
               </div>
             </div>

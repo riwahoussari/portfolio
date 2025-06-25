@@ -28,7 +28,7 @@ const LINKS = [
   },
 ];
 
-export default function Navbar2() {
+export default function Navbar() {
   const [hasMounted, setHasMounted] = useState(false);
   const [hideNavOnScroll, setHideNavOnScroll] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -75,18 +75,23 @@ export default function Navbar2() {
         "z-1000 side-padding sticky top-0 flex w-full items-center justify-between bg-transparent py-6 " +
         (mobileMenuOpen ? " sm:backdrop-blur-md" : " backdrop-blur-md")
       }
-      initial={{ y: "-100%" }}
-      animate={{ y: hideNavOnScroll && !mobileMenuOpen ? "-100%" : "0%" }}
+      initial={{ y: "-100%", opacity: 0 }}
+      animate={
+        hideNavOnScroll && !mobileMenuOpen ? { y: "-100%", opacity: 0 } : { y: "0%", opacity: 1 }
+      }
       transition={{
         ease: "easeInOut",
-        duration: hasMounted ? 0.3 : 0.7,
+        duration: hasMounted ? 0.5 : 0.7,
         delay: hasMounted ? 0 : 0.3,
       }}
     >
       {/* Big Screen Navigation Links */}
-      <nav className="navlink flex w-full items-center justify-between backdrop-blur-md ">
+      <nav className="navlink flex w-full items-center justify-between backdrop-blur-md">
         {LINKS.map((link, i) => (
-          <div className={"text-foreground " + (i !== 0 && " max-lg:hidden")}>
+          <div
+            key={i}
+            className={"text-foreground " + (i !== 0 && " max-lg:hidden")}
+          >
             <HoverLink href={link.link} key={i}>
               {link.name}
             </HoverLink>
