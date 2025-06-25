@@ -65,7 +65,11 @@ export default function Testimonials() {
     <section id="testimonials" className="pt-[25vh] md:pt-[50vh]">
       {/* title */}
       <motion.div
-        style={{ scaleY: titleDivScaleY, translateY: titleDivTranslateY }}
+        style={{
+          scaleY: titleDivScaleY,
+          opacity: titleDivScaleY,
+          translateY: titleDivTranslateY,
+        }}
         ref={titleDivRef}
         className="scale mx-auto flex h-dvh max-w-[90vw] origin-top flex-col items-center justify-center"
       >
@@ -84,6 +88,7 @@ export default function Testimonials() {
         ref={testimonialDivRef}
         style={{
           scaleY: testimonialDiv1FinalScale,
+          opacity: testimonialDiv1ScaleY2,
           translateY: testimonialDiv1TranslateY,
         }}
         className="mx-auto flex h-dvh max-w-[80vw] origin-top flex-col items-center justify-center sm:max-w-[90vw]"
@@ -102,7 +107,7 @@ export default function Testimonials() {
 
       {/* testimonial 2 */}
       <motion.div
-        style={{ scaleY: testimonialDiv2ScaleY }}
+        style={{ scaleY: testimonialDiv2ScaleY  }}
         className="mx-auto flex h-dvh max-w-[80vw] origin-top flex-col items-center justify-center sm:max-w-[90vw]"
       >
         <div className="w-10">
