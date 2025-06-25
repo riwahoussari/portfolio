@@ -221,7 +221,7 @@ export default function Works() {
   }, []);
 
   return (
-    <section   style={{ height: adjustedHeight }}>
+    <section  id="projects" style={{ height: adjustedHeight }}>
         <div ref={sectionRef}>
           {/* title */}
           <div

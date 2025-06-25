@@ -62,7 +62,7 @@ export default function Testimonials() {
   }, [testimonialDiv1ScaleY1, testimonialDiv1ScaleY2]);
 
   return (
-    <section className="pt-[25vh] md:pt-[50vh]">
+    <section id="testimonials" className="pt-[25vh] md:pt-[50vh]">
       {/* title */}
       <motion.div
         style={{ scaleY: titleDivScaleY, translateY: titleDivTranslateY }}

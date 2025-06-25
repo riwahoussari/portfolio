@@ -1,15 +1,117 @@
-import Link from "next/link";
+"use client";
+import { useEffect, useRef, useState } from "react";
+import BurgerMenuSvg from "./BurgerMenuSvg";
+import MobileNavMenu from "./MobileNavMenu";
+import { motion, useMotionValueEvent, useScroll } from "motion/react";
+import HoverLink from "./HoverLink";
 
-export default function Navbar() {
+const LINKS = [
+  {
+    name: "RIWA HOUSSARI",
+    link: "#riwa",
+  },
+  {
+    name: "Services",
+    link: "#services",
+  },
+  {
+    name: "Projects",
+    link: "#projects",
+  },
+  {
+    name: "Testimonials",
+    link: "#testimonials",
+  },
+  {
+    name: "Contact",
+    link: "#contact",
+  },
+];
+
+export default function Navbar2() {
+  const [hasMounted, setHasMounted] = useState(false);
+  const [hideNavOnScroll, setHideNavOnScroll] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const { scrollY } = useScroll();
+  const mobileMenuRef = useRef<HTMLDivElement>(null);
+  const burgerBtnRef = useRef<HTMLDivElement>(null);
+
+  // Triggers on mount slide down animation for navbar
+  useEffect(() => {
+    setHasMounted(true);
+  }, []);
+
+  // Hide navbar when scrolling down, show when scrolling up
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    const previous = scrollY.getPrevious() || 0;
+    setHideNavOnScroll(latest > previous && latest > 50);
+  });
+
+  // Close mobile menu if user clicks outside the menu
+  useEffect(() => {
+    function handleClickOutside(e: MouseEvent) {
+      if (
+        mobileMenuRef.current &&
+        !mobileMenuRef.current.contains(e.target as Node) &&
+        !burgerBtnRef.current?.contains(e.target as Node)
+      ) {
+        setMobileMenuOpen(false);
+      }
+    }
+
+    if (mobileMenuOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [mobileMenuOpen]);
+
   return (
-    <header className="fixed z-1000 top-0 w-full -translate-y-full">
-      <nav className="side-padding navlink flex justify-between items-center py-6 bg-transparent backdrop-blur-md max-md:opacity-0">
-        <Link href="">About</Link>
-        <Link href="">Services</Link>
-        <Link href="">Projects</Link>
-        <Link href="">Testimonials</Link>
-        <Link href="">Contact</Link>
+    <motion.header
+      className={
+        "z-1000 side-padding sticky top-0 flex w-full items-center justify-between bg-transparent py-6 " +
+        (mobileMenuOpen ? " sm:backdrop-blur-md" : " backdrop-blur-md")
+      }
+      initial={{ y: "-100%" }}
+      animate={{ y: hideNavOnScroll && !mobileMenuOpen ? "-100%" : "0%" }}
+      transition={{
+        ease: "easeInOut",
+        duration: hasMounted ? 0.3 : 0.7,
+        delay: hasMounted ? 0 : 0.3,
+      }}
+    >
+      {/* Big Screen Navigation Links */}
+      <nav className="navlink flex w-full items-center justify-between backdrop-blur-md ">
+        {LINKS.map((link, i) => (
+          <div className={"text-foreground " + (i !== 0 && " max-lg:hidden")}>
+            <HoverLink href={link.link} key={i}>
+              {link.name}
+            </HoverLink>
+          </div>
+        ))}
       </nav>
-    </header>
+
+      {/* Mobile Menu Toggle */}
+      <div className="z-1 relative flex w-full items-center justify-end gap-4 lg:hidden">
+        {/* Mobile Burger Menu */}
+        <div
+          ref={burgerBtnRef}
+          className="w-7"
+          onClick={() => setMobileMenuOpen((prev) => !prev)}
+        >
+          <BurgerMenuSvg isOpen={mobileMenuOpen} />
+        </div>
+      </div>
+
+      {/* Mobile Navigation Menu */}
+      <MobileNavMenu
+        ref={mobileMenuRef}
+        isOpen={mobileMenuOpen}
+        setIsOpen={setMobileMenuOpen}
+      />
+    </motion.header>
   );
 }

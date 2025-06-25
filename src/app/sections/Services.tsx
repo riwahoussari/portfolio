@@ -94,7 +94,7 @@ export default function Services() {
   );
 
   return (
-    <section ref={sectionRef} className="relative md:mt-[25vh]">
+    <section id="services" ref={sectionRef} className="relative md:mt-[25vh]">
       <div className="sticky top-0 h-dvh">
         {/* gradient background */}
         <motion.div
