@@ -1,221 +1,237 @@
 "use client";
-
 import {
   useScroll,
   useTransform,
   motion,
   useMotionValueEvent,
-  AnimatePresence,
+  useMotionValue,
 } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 
 const SKILLS = [
-  ["Figma", "Responsiveness", "Motion Design", "Animations", "Typography", "Colors"],
-  ["Nextjs", "React", "Gsap", "Motion", "Tailwind", "Webflow"],
-  ["Nodejs", "Django", "Flask", "MongoDB", "MySQL", "APIs"],
+  {
+    title: "Web Design",
+    list: [
+      "Figma",
+      "Animations",
+      "Responsiveness",
+      "Motion Design",
+      "Typography",
+      "Colors",
+    ],
+  },
+  {
+    title: "Frontend Development",
+    list: ["Nextjs", "React", "Framer Motion", "Webflow", "Gsap", "Tailwind"],
+  },
+  {
+    title: "Backend Development",
+    list: ["Nodejs", "Django", "Flask", "MongoDB", "MySQL", "APIs"],
+  },
 ];
 
 export default function Services() {
-  // background color based on user theme preference
-  const [initialColor, setInitialColor] = useState("#000000");
-  useEffect(() => {
-    const color = getComputedStyle(document.documentElement)
-      .getPropertyValue("--foreground")
-      .trim();
+  // marquee
+  const marqueeVariants = {
+    animate: {
+      x: ["0%", "-50%"],
+      transition: {
+        x: {
+          duration: 20,
+          ease: "linear",
+          repeat: Infinity,
+          repeatType: "loop",
+        },
+      },
+    },
+  };
 
-    setInitialColor(color);
-  }, []);
-
-  // section scroll progress
+  // Scroll Progress IN/OUT
   const sectionRef = useRef(null);
-  const { scrollYProgress } = useScroll({
+  const { scrollYProgress: sectionScrollIn } = useScroll({
     target: sectionRef,
-    offset: ["-100vh start", "end 200vh"],
+    offset: ["start end", "start -50vh"],
+  });
+  const { scrollYProgress: sectionScrollOut } = useScroll({
+    target: sectionRef,
+    offset: ["end 150vh", "end end"],
   });
 
-  // Transforms
+  // services text opacity animate in
+  const [servicesHidden, setServicesHidden] = useState(true);
+  useMotionValueEvent(sectionScrollIn, "change", (latest) => {
+    setServicesHidden(latest < 0.66);
+  });
 
-  // text div scroll up
-  const translateY = useTransform(scrollYProgress, [0, 1], ["60%", "-40%"]);
+  // Background Gradient opacity animate in-out
+  const gradientOpacityIn = useTransform(sectionScrollIn, [0.33, 0.66], [0, 1]);
+  const gradientOpacityOut = useTransform(sectionScrollOut, [0, 1], [1, 0]);
+  const gradientOpacity = useMotionValue(0);
+  useEffect(() => {
+    const unsub1 = gradientOpacityIn.on("change", (v) =>
+      gradientOpacity.set(v)
+    );
+    const unsub2 = gradientOpacityOut.on("change", (v) =>
+      gradientOpacity.set(v)
+    );
+    return () => {
+      unsub1();
+      unsub2();
+    };
+  }, [gradientOpacityIn, gradientOpacityOut]);
 
-  // each service horizontal scroll
-  const translateX1 = useTransform(
-    scrollYProgress,
-    [0, 0.33, 0.66],
-    ["20%", "11%", "20%"]
-  );
-  const translateX2 = useTransform(
-    scrollYProgress,
-    [0.33, 0.66, 1],
-    ["0%", "11%", "0%"]
-  );
-  const translateX3 = useTransform(scrollYProgress, [0.66, 1], ["20%", "11%"]);
-
-  // text opacity
-  const opacity1 = useTransform(scrollYProgress, [0, 0.33, 0.66], [0, 1, 0]);
-  const opacity2 = useTransform(scrollYProgress, [0.33, 0.66, 1], [0, 1, 0]);
-  const opacity3 = useTransform(scrollYProgress, [0.66, 1], [0, 1]);
-
-  // text color
-  const color1 = useTransform(
-    scrollYProgress,
-    [0, 0.33],
-    [initialColor, "#fd2c2a"]
-  );
-  const color2 = useTransform(
-    scrollYProgress,
-    [0.33, 0.66],
-    [initialColor, "#ffd230"]
-  );
-  const color3 = useTransform(
-    scrollYProgress,
+  //  clippath animate in-out
+  const clipPathIn = useTransform(
+    sectionScrollIn,
     [0.66, 1],
-    [initialColor, "#9810fa"]
+    ["inset(0 0 0 100%)", "inset(0 0 0 0%)"]
   );
 
-  // circle size and color
-  const scale = useTransform(
-    scrollYProgress,
-    [0.12, 0.25, 0.38, 0.5, 0.61, 0.71, 0.83, 0.95],
-    [0, 1, 1, 0, 1, 1, 0, 1]
+  const clipPathOut = useTransform(
+    sectionScrollOut,
+    [0, 1],
+    ["inset(100% 0 0 0)", "inset(0% 0 0 0)"]
   );
-  const backgroundColor = useTransform(
-    scrollYProgress,
-    [0.12, 0.25, 0.38, 0.5, 0.61, 0.71, 0.83, 0.95],
-    [
-      "#fd2c2a",
-      "#fd2c2a",
-      "#fd2c2a",
-      "#ffd230",
-      "#ffd230",
-      "#ffd230",
-      "#9810fa",
-      "#9810fa",
-    ]
-  );
-
-  const [serviceIndex, setServiceIndex] = useState(0);
-  useMotionValueEvent(scrollYProgress, "change", (latest) => {
-    if (latest < 0.5) {
-      setServiceIndex(0);
-    } else if (latest < 0.75) {
-      setServiceIndex(1);
-    } else {
-      setServiceIndex(2);
-    }
-  });
 
   return (
-    <section
-      ref={sectionRef}
-      className="bg-background z-2 relative h-[300vh] -translate-y-[100vh] pt-40"
-    >
-      <div className="sticky top-[100vh] flex h-dvh flex-col justify-center">
-        <div
-          style={{ rowGap: 0 }}
-          className="grid-system relative items-center overflow-hidden max-lg:h-dvh max-lg:grid-rows-[3fr_2fr]"
-        >
-          {/* Services */}
-          <div className="relative col-span-4 max-lg:[align-self:end] md:col-span-8 lg:col-span-5 xl:col-span-7">
-            {/* Red Dot */}
-            <motion.div
-              style={{ scale, backgroundColor }}
-              className="xl:top-34/100 lg:top-33/100 md:top-36/100 sm:top-36/100 top-35/100 bg-accen absolute left-2 aspect-square w-[min(20px,3vw)] rounded-full sm:left-6 md:left-8 md:w-5 lg:left-4 lg:w-6"
-            />
+    <section ref={sectionRef} className="relative md:mt-[25vh]">
+      <div className="sticky top-0 h-dvh">
+        {/* gradient background */}
+        <motion.div
+          style={{ opacity: gradientOpacity }}
+          className="bg-accent-gradient absolute left-0 right-0 top-0 z-0 h-dvh"
+        />
 
-            {/* services */}
+        {/* Services Title Text */}
+        <div className="z-1 flex h-dvh flex-col items-center justify-center">
+          <motion.div
+            animate={servicesHidden ? { opacity: 0 } : { opacity: 1 }}
+            transition={{ duration: 0.5, ease: "easeInOut" }}
+            className="md:scale-y-200 sm:scale-y-250 scale-y-250 max-xs:-translate-y-full xs:origin-bottom relative w-full origin-bottom overflow-hidden"
+          >
             <motion.div
-              style={{ translateY: translateY }}
-              className="font-neue-montreal col-span-4 text-[min(48px,7vw)] font-medium max-lg:[align-self:end] md:col-span-8 lg:col-span-5 lg:text-[48px] xl:col-span-7 xl:text-[56px] 2xl:text-[64px]"
+              className="text-foreground absolute whitespace-pre"
+              animate="animate"
+              variants={marqueeVariants}
             >
-              <motion.h3
-                className="lg:pb-18 pb-[clamp(25px,6vh,40px)] 2xl:pb-20"
-                style={{
-                  translateX: translateX1,
-                  opacity: opacity1,
-                  color: color1,
-                }}
+              <h2 className="display-1 bold sm:text-[clamp(125px,14vw,230px)]! text-[90px]! spaced inline w-max">
+                SERVICES SKILLS{" "}
+              </h2>
+              <h2
+                aria-hidden
+                className="display-1 bold sm:text-[clamp(125px,14vw,230px)]! text-[90px]! spaced inline w-max"
               >
-                Web Design
-              </motion.h3>
-              <motion.h3
-                className="lg:pb-18 pb-[clamp(25px,6vh,40px)] 2xl:pb-20"
-                style={{
-                  translateX: translateX2,
-                  opacity: opacity2,
-                  color: color2,
-                }}
-              >
-                Frontend Development
-              </motion.h3>
-              <motion.h3
-                className="lg:pb-18 pb-[clamp(25px,6vh,40px)] 2xl:pb-20"
-                style={{
-                  translateX: translateX3,
-                  opacity: opacity3,
-                  color: color3,
-                }}
-              >
-                Backend Development
-              </motion.h3>
+                SERVICES SKILLS{" "}
+              </h2>
             </motion.div>
-          </div>
+            {/* placeholder to maintain container height */}
+            <h2
+              aria-hidden
+              className="display-1 bold sm:text-[clamp(125px,14vw,230px)]! text-[90px]! spaced inline w-max whitespace-nowrap opacity-0"
+            >
+              SERVICES SKILLS{" "}
+            </h2>
+          </motion.div>
 
-          {/* Skills */}
-
-          <div className="bg-background z-1 h4-light relative col-span-4 max-h-[80vh] self-start max-lg:max-w-[600px] max-md:!text-[clamp(18px,3vw,20px)] md:col-span-8 lg:col-span-3 lg:col-start-6 xl:col-span-5 xl:col-start-8 2xl:col-span-4 2xl:col-start-9">
-            <AnimatePresence>
-              <motion.div
-                key={serviceIndex}
-                className="lg:divide-y-1 absolute left-0 top-0 flex flex-col flex-wrap max-lg:flex-row max-lg:overflow-y-hidden w-full"
-                initial={{ opacity: 0 }}
-                animate={{
-                  opacity: 1,
-                  transition: { duration: 0, delay: 0.45, ease: "easeInOut" },
-                }}
-                exit={{ y: 1, transition: { duration: 0.5, ease: "easeInOut" } }}
+          <motion.div
+            animate={servicesHidden ? { opacity: 0 } : { opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.3, ease: "easeInOut" }}
+            className="md:scale-y-200 sm:scale-y-250 scale-y-250 xs:origin-top relative w-full origin-center -scale-x-100 overflow-hidden"
+          >
+            <motion.div
+              className="text-foreground absolute whitespace-pre"
+              animate="animate"
+              variants={marqueeVariants}
+            >
+              <h2 className="display-1 text-outline bold sm:text-[clamp(125px,14vw,230px)]! text-[90px]! spaced inline w-max">
+                SKILLS SERVICES{" "}
+              </h2>
+              <h2
+                aria-hidden
+                className="display-1 text-outline bold sm:text-[clamp(125px,14vw,230px)]! text-[90px]! spaced inline w-max"
               >
-                {SKILLS[serviceIndex].map((skill, i) => (
-                  <div
-                    key={`${serviceIndex}_${i}`}
-                    className="border-1 group relative min-w-24 overflow-hidden py-3 text-center max-lg:w-1/3 lg:px-4 lg:py-5"
-                  >
-                    <p className="z-1 relative text-white mix-blend-difference ">
-                      {skill}
-                    </p>
-                    <motion.div
-                      aria-hidden
-                      className="bg-foreground absolute bottom-0 left-0 right-0 top-0 z-20  group-hover:translate-y-0"
-                      initial={{ y: 0 }}
-                      animate={{
-                        y: "-100%",
-                        transition: {
-                          duration: 0.5,
-                          delay: 0.5,
-                          ease: "easeInOut",
-                        },
-                      }}
-                      exit={{
-                        y: 0,
-                        transition: { duration: 0.5, ease: "easeInOut" },
-                      }}
-                    />
-                  </div>
-                ))}
-              </motion.div>
-            </AnimatePresence>
-          </div>
+                SKILLS SERVICES{" "}
+              </h2>
+            </motion.div>
+            {/* placeholder to maintain container height */}
+            <h2
+              aria-hidden
+              className="display-1 text-outline bold sm:text-[clamp(125px,14vw,230px)]! text-[90px]! spaced inline w-max whitespace-nowrap opacity-0"
+            >
+              SKILLS SERVICES{" "}
+            </h2>
+          </motion.div>
+
+          <motion.div
+            animate={servicesHidden ? { opacity: 0 } : { opacity: 1 }}
+            transition={{ duration: 0.5, ease: "easeInOut" }}
+            className="md:scale-y-200 sm:scale-y-250 scale-y-250 xs:hidden relative w-full origin-top translate-y-full overflow-hidden"
+          >
+            <motion.div
+              className="text-foreground absolute whitespace-pre"
+              animate="animate"
+              variants={marqueeVariants}
+            >
+              <h2 className="display-1 bold sm:text-[clamp(125px,14vw,230px)]! text-[90px]! spaced inline w-max">
+                SKILLS SERVICES{" "}
+              </h2>
+              <h2
+                aria-hidden
+                className="display-1 bold sm:text-[clamp(125px,14vw,230px)]! text-[90px]! spaced inline w-max"
+              >
+                SKILLS SERVICES{" "}
+              </h2>
+            </motion.div>
+            {/* placeholder to maintain container height */}
+            <h2
+              aria-hidden
+              className="display-1 bold sm:text-[clamp(125px,14vw,230px)]! text-[90px]! spaced inline w-max whitespace-nowrap opacity-0"
+            >
+              SKILLS SERVICES{" "}
+            </h2>
+          </motion.div>
         </div>
+
+        <motion.div
+          style={{ clipPath: clipPathIn }}
+          className="bg-background absolute right-0 top-0 h-dvh lg:w-2/3 xl:w-[60%] 2xl:w-1/2"
+        />
+        <motion.div
+          style={{ clipPath: clipPathOut }}
+          className="bg-background absolute left-0 top-0 h-dvh w-full max-lg:hidden"
+        />
+      </div>
+
+      {/* Services */}
+      <div className="z-2 relative ms-auto mt-[20vh] grid pb-[min(33vh,20vw)] max-lg:pb-[100vh] lg:w-2/3 xl:w-[60%] 2xl:w-1/2">
+        <div className="bg-background absolute h-dvh left-0 right-0 top-0 lg:hidden" />
+
+        <motion.div
+          style={{ clipPath: clipPathIn }}
+          className="side-padding bg-background relative pt-[max(150px,13vh)] sm:pt-[max(300px,25vh)] lg:pt-0"
+        >
+          {SKILLS.map((skill) => (
+            <div
+              key={skill.title}
+              className="mb-[max(150px,13vh)] sm:mb-[max(300px,25vh)] lg:mb-[33vh]"
+            >
+              <h3 className="display-1 md:text-[max(72px,6vw)]! text-[max(8vw,44px)]!">
+                {skill.title}
+              </h3>
+              <div className="xs:gap-5 mt-10 flex flex-wrap gap-4 md:gap-6">
+                {skill.list.map((item) => (
+                  <p
+                    key={item}
+                    className="md:text-[max(30px,2vw)]! xs:text-[24px]! border-foreground xs:px-5 rounded-[10px] border-2 px-4 py-2 text-[20px] sm:rounded-xl md:px-6 md:py-3"
+                  >
+                    {item}
+                  </p>
+                ))}
+              </div>
+            </div>
+          ))}
+        </motion.div>
       </div>
     </section>
   );
 }
-
-// {
-//   /* title */
-// }
-// <div className=" mb-[min(80px,5vh)]">
-//   <h2 className=" h4-regular  border-b-1 inline-block pb-1">
-//     Services & Skills
-//   </h2>
-// </div>

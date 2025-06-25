@@ -1,6 +1,6 @@
 "use client";
 import { useScroll, useTransform, motion, useMotionValue } from "motion/react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 
 export default function Works() {
   ///////////////////////////// update video clip path inset based on aspect ratio
@@ -137,12 +137,12 @@ export default function Works() {
   const video2Ref = useRef(null);
   const { scrollYProgress: video2Scroll1 } = useScroll({
     target: video2Ref,
-    offset: ["400vh start", "500vh start"],
+    offset: ["-300vh start", "-200vh start"],
   });
 
   const { scrollYProgress: video2Scroll2 } = useScroll({
     target: video2Ref,
-    offset: ["end 0vh", "end -100vh"],
+    offset: ["end 700vh", "end 600vh"],
   });
 
   // Scale down from 1 to 0.65
@@ -191,147 +191,174 @@ export default function Works() {
     finalClipPath2,
   ]);
 
+  ///
+  const sectionRef = useRef<HTMLDivElement | null>(null);
+  const [adjustedHeight, setAdjustedHeight] = useState("auto");
+
+  useLayoutEffect(() => {
+    const updateHeight = () => {
+      const section = sectionRef.current;
+      if (section) {
+        const sectionHeight = section.scrollHeight;
+        const vh = window.innerHeight / 100;
+        const offset = 500 * vh;
+        const newHeight = Math.max(0, sectionHeight - offset);
+        if (newHeight > 100 * vh) {
+          setAdjustedHeight(`${newHeight}px`);
+        }
+      }
+    };
+
+    updateHeight(); // Initial run on mount
+
+    // Add window resize listener
+    window.addEventListener("resize", updateHeight);
+
+    // Cleanup listener on unmount
+    return () => {
+      window.removeEventListener("resize", updateHeight);
+    };
+  }, []);
+
   return (
-    <section className="">
-      {/* title */}
-      <div
-        className="z-2 relative h-[200vh]"
-        style={{ clipPath: "inset(0 0 100vh 0)" }}
-      >
-        <div className="grid-system bg-background sticky top-0 flex h-dvh items-center overflow-hidden">
-          <div className="relative col-span-7 max-sm:-translate-y-1/2 xl:col-span-10">
-            <h2 className="display-1 text-[max(64px,10.41vw)]! max-2xs:text-[50px]! flex flex-col whitespace-pre">
-              <span>SELECTED</span>{" "}
-              <span className="mt-2 text-right">WORKS</span>
-            </h2>
-            <p className="text-[max(18px,2vw)]! body-1 absolute left-0 top-[125%] w-[min(250px,80%)] opacity-80 sm:top-[65%] sm:w-[40%]">
-              Some opportunities and projects that I’m proud of!
-            </p>
-          </div>
-        </div>
-      </div>
-
-      {/* arthyl */}
-      <div className="z-1 absolute -translate-y-[200vh]">
-        <div
-          ref={video1Ref}
-          className="z-1 bg-background relative h-[500vh] sm:h-[600vh] lg:h-[min(700vh,750vw)]"
-          style={{ clipPath: "inset(0 0 100vh 0)" }}
-        >
-          <motion.div
-            style={{ scale: finalScale1 }}
-            className="sticky top-[200vh] w-full overflow-hidden"
+    <section   style={{ height: adjustedHeight }}>
+        <div ref={sectionRef}>
+          {/* title */}
+          <div
+            className="z-2 relative h-[200vh]"
+            style={{ clipPath: "inset(0 0 100vh 0)" }}
           >
-            <div className="z-1 relative h-dvh w-full">
-              <motion.div
-                style={{ clipPath: finalClipPath1 }}
-                className="z-1 absolute min-h-dvh min-w-full object-cover blur-lg brightness-75"
-              >
-                <video
-                  src="/arthyl-screen-recording.mp4"
-                  className="min-h-dvh min-w-full object-cover"
-                  autoPlay
-                  muted
-                  loop
-                ></video>
-              </motion.div>
-              <div className="z-1 absolute flex h-dvh w-full items-stretch justify-center">
-                <video
-                  ref={videoRef1}
-                  src="/arthyl-screen-recording.mp4"
-                  className="max-h-dvh object-contain"
-                  autoPlay
-                  muted
-                  loop
-                  onLoadedMetadata={(e) => {
-                    const video = e.currentTarget;
-                    video.style.width = `${video.videoWidth}px`;
-                    video.style.height = `${video.videoHeight}px`;
-                  }}
-                ></video>
+            <div className="grid-system bg-background sticky top-0 flex h-dvh items-center overflow-hidden">
+              <div className="relative col-span-7 max-sm:-translate-y-1/2 xl:col-span-10">
+                <h2 className="display-1 text-[max(64px,10.41vw)]! max-2xs:text-[50px]! flex flex-col whitespace-pre">
+                  <span>SELECTED</span>{" "}
+                  <span className="mt-2 text-right">WORKS</span>
+                </h2>
+                <p className="text-[max(18px,2vw)]! body-1 absolute left-0 top-[125%] w-[min(250px,80%)] opacity-80 sm:top-[65%] sm:w-[40%]">
+                  Some opportunities and projects that I’m proud of!
+                </p>
               </div>
             </div>
-          </motion.div>
-
-          <div className="z-100 relative translate-y-[100vh] text-white mix-blend-difference sm:translate-y-[150vh] lg:translate-y-[min(200vh,200vw)]">
-            <h2 className="display-1 text-[max(64px,10.41vw)]! max-xs:text-[12vw]! side-padding mb-[50vh] text-right md:mb-[min(60vh,60vw)] xl:mb-[min(80vh,80vw)]">
-              ARTHYL.COM
-            </h2>
-            <p className="grid-system text-[max(16px,1.6vw)]!">
-              <span className="col-span-4 max-md:max-w-[485px] md:min-w-[485px] xl:col-span-5">
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nobis
-                repellendus voluptatem voluptates excepturi nam. Impedit
-                reprehenderit modi totam delectus, ut a eum tempora quam omnis,
-                maiores vero molestiae labore, consequatur assumenda accusamus
-                blanditiis cum. Dolor tempora ducimus impedit nesciunt quod
-                similique magni sapiente sint! Nisi fugit provident iste
-                perspiciatis autem.
-              </span>
-            </p>
           </div>
-        </div>
-      </div>
 
-      {/* haifaa bitar */}
-      <div className="absolute -translate-y-[-300vh]">
-        <div
-          ref={video2Ref}
-          className="relative z-0 h-[500vh] sm:h-[600vh] lg:h-[min(700vh,750vw)]"
-          style={{ clipPath: "inset(0 0 100vh 0)" }}
-        >
-          <motion.div
-            style={{ scale: finalScale2 }}
-            className="sticky top-[-300vh] w-full overflow-hidden"
+          {/* arthyl */}
+          <div
+            ref={video1Ref}
+            className="z-1 bg-background relative h-[500vh] -translate-y-[200vh] sm:h-[600vh] lg:h-[min(700vh,750vw)]"
+            style={{ clipPath: "inset(0 0 100vh 0)" }}
           >
-            <div className="z-1 relative h-dvh w-full">
-              <motion.div
-                style={{ clipPath: finalClipPath2 }}
-                className="z-1 absolute min-h-dvh min-w-full object-cover blur-lg brightness-75"
-              >
-                <video
-                  src="/haifaa-bitar-screen-recording.mp4"
-                  className="min-h-dvh min-w-full object-cover"
-                  autoPlay
-                  muted
-                  loop
-                ></video>
-              </motion.div>
-              <div className="z-1 absolute flex h-dvh w-full items-stretch justify-center">
-                <video
-                  ref={videoRef2}
-                  src="/haifaa-bitar-screen-recording.mp4"
-                  className="max-h-dvh object-contain"
-                  autoPlay
-                  muted
-                  loop
-                  onLoadedMetadata={(e) => {
-                    const video = e.currentTarget;
-                    video.style.width = `${video.videoWidth}px`;
-                    video.style.height = `${video.videoHeight}px`;
-                  }}
-                ></video>
+            <motion.div
+              style={{ scale: finalScale1 }}
+              className="sticky top-[200vh] w-full overflow-hidden"
+            >
+              <div className="z-1 relative h-dvh w-full">
+                <motion.div
+                  style={{ clipPath: finalClipPath1 }}
+                  className="z-1 absolute min-h-dvh min-w-full object-cover blur-lg brightness-75"
+                >
+                  <video
+                    src="/arthyl-screen-recording.mp4"
+                    className="min-h-dvh min-w-full object-cover"
+                    autoPlay
+                    muted
+                    loop
+                  ></video>
+                </motion.div>
+                <div className="z-1 absolute flex h-dvh w-full items-stretch justify-center">
+                  <video
+                    ref={videoRef1}
+                    src="/arthyl-screen-recording.mp4"
+                    className="max-h-dvh object-contain"
+                    autoPlay
+                    muted
+                    loop
+                    onLoadedMetadata={(e) => {
+                      const video = e.currentTarget;
+                      video.style.width = `${video.videoWidth}px`;
+                      video.style.height = `${video.videoHeight}px`;
+                    }}
+                  ></video>
+                </div>
               </div>
-            </div>
-          </motion.div>
+            </motion.div>
 
-          <div className="z-100 relative translate-y-[100vh] text-white mix-blend-difference sm:translate-y-[150vh] lg:translate-y-[min(200vh,200vw)]">
-            <h2 className="display-1 text-[max(52px,9vw)]! max-xs:text-[10vw]! side-padding mb-[50vh] text-right md:mb-[min(60vh,60vw)] xl:mb-[min(80vh,80vw)]">
-              HAIFAABITAR.COM
-            </h2>
-            <p className="grid-system text-[max(16px,1.6vw)]!">
-              <span className="col-span-4 max-md:max-w-[485px] md:min-w-[485px] xl:col-span-5">
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nobis
-                repellendus voluptatem voluptates excepturi nam. Impedit
-                reprehenderit modi totam delectus, ut a eum tempora quam omnis,
-                maiores vero molestiae labore, consequatur assumenda accusamus
-                blanditiis cum. Dolor tempora ducimus impedit nesciunt quod
-                similique magni sapiente sint! Nisi fugit provident iste
-                perspiciatis autem.
-              </span>
-            </p>
+            <div className="z-100 relative translate-y-[100vh] text-white mix-blend-difference sm:translate-y-[150vh] lg:translate-y-[min(200vh,200vw)]">
+              <h2 className="display-1 text-[max(64px,10.41vw)]! max-xs:text-[12vw]! side-padding mb-[50vh] text-right md:mb-[min(60vh,60vw)] xl:mb-[min(80vh,80vw)]">
+                ARTHYL.COM
+              </h2>
+              <p className="grid-system text-[max(16px,1.6vw)]!">
+                <span className="col-span-4 max-md:max-w-[485px] md:min-w-[485px] xl:col-span-5">
+                  Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+                  Nobis repellendus voluptatem voluptates excepturi nam. Impedit
+                  reprehenderit modi totam delectus, ut a eum tempora quam
+                  omnis, maiores vero molestiae labore, consequatur assumenda
+                  accusamus blanditiis cum. Dolor tempora ducimus impedit
+                  nesciunt quod similique magni sapiente sint! Nisi fugit
+                  provident iste perspiciatis autem.
+                </span>
+              </p>
+            </div>
+          </div>
+
+          {/* haifaa bitar */}
+          <div
+            ref={video2Ref}
+            className="bg-background relative z-0 h-[500vh] -translate-y-[400vh] sm:h-[600vh] lg:h-[min(700vh,750vw)]"
+            style={{ clipPath: "inset(0 0 100vh 0)" }}
+          >
+            <motion.div
+              style={{ scale: finalScale2 }}
+              className="sticky top-[400vh] w-full overflow-hidden"
+            >
+              <div className="z-1 relative h-dvh w-full">
+                <motion.div
+                  style={{ clipPath: finalClipPath2 }}
+                  className="z-1 absolute min-h-dvh min-w-full object-cover blur-lg brightness-75"
+                >
+                  <video
+                    src="/haifaa-bitar-screen-recording.mp4"
+                    className="min-h-dvh min-w-full object-cover"
+                    autoPlay
+                    muted
+                    loop
+                  ></video>
+                </motion.div>
+                <div className="z-1 absolute flex h-dvh w-full items-stretch justify-center">
+                  <video
+                    ref={videoRef2}
+                    src="/haifaa-bitar-screen-recording.mp4"
+                    className="max-h-dvh object-contain"
+                    autoPlay
+                    muted
+                    loop
+                    onLoadedMetadata={(e) => {
+                      const video = e.currentTarget;
+                      video.style.width = `${video.videoWidth}px`;
+                      video.style.height = `${video.videoHeight}px`;
+                    }}
+                  ></video>
+                </div>
+              </div>
+            </motion.div>
+
+            <div className="z-100 relative translate-y-[100vh] text-white mix-blend-difference sm:translate-y-[150vh] lg:translate-y-[min(200vh,200vw)]">
+              <h2 className="display-1 text-[max(52px,9vw)]! max-xs:text-[10vw]! side-padding mb-[50vh] text-right md:mb-[min(60vh,60vw)] xl:mb-[min(80vh,80vw)]">
+                HAIFAABITAR.COM
+              </h2>
+              <p className="grid-system text-[max(16px,1.6vw)]!">
+                <span className="col-span-4 max-md:max-w-[485px] md:min-w-[485px] xl:col-span-5">
+                  Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+                  Nobis repellendus voluptatem voluptates excepturi nam. Impedit
+                  reprehenderit modi totam delectus, ut a eum tempora quam
+                  omnis, maiores vero molestiae labore, consequatur assumenda
+                  accusamus blanditiis cum. Dolor tempora ducimus impedit
+                  nesciunt quod similique magni sapiente sint! Nisi fugit
+                  provident iste perspiciatis autem.
+                </span>
+              </p>
+            </div>
           </div>
         </div>
-      </div>
     </section>
   );
 }

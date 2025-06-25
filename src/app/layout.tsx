@@ -8,6 +8,11 @@ import { ThemeProvider } from "next-themes";
 export const neueMontreal = localFont({
   src: [
     {
+      path: "./fonts/NeueMontreal/NeueMontreal-Light.otf",
+      weight: "300",
+      style: "normal",
+    },
+    {
       path: "./fonts/NeueMontreal/NeueMontreal-Regular.otf",
       weight: "400",
       style: "normal",
@@ -18,8 +23,8 @@ export const neueMontreal = localFont({
       style: "normal",
     },
     {
-      path: "./fonts/NeueMontreal/NeueMontreal-Light.otf",
-      weight: "300",
+      path: "./fonts/NeueMontreal/NeueMontreal-Bold.otf",
+      weight: "700",
       style: "normal",
     },
   ],
@@ -68,7 +73,7 @@ export default function RootLayout({
         <ThemeProvider attribute="class" defaultTheme="system">
           <LenisScrollWrapper>
             <Navbar />
-            <main >{children}</main>
+            <main>{children}</main>
           </LenisScrollWrapper>
         </ThemeProvider>
       </body>

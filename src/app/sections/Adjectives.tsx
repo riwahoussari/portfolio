@@ -42,7 +42,7 @@ export default function Adjectives() {
 
   return (
     <section ref={sectionRef} className="relative  h-[200vh] md:h-[300vh]">
-      <div className="z-1 display-1 text-[max(77px,12vw)]! max-2xs:text-[18vw]! sticky top-0 flex h-dvh flex-col justify-evenly overflow-hidden py-20 text-foreground">
+      <div className="z-1 display-1 text-[max(77px,12vw)]! max-2xs:text-[18vw]! sticky top-0 flex h-dvh flex-col justify-evenly overflow-hidden py-20 text-white mix-blend-difference">
         <div className="relative">
           <motion.p
             style={{ left: position }}
@@ -80,7 +80,7 @@ export default function Adjectives() {
 
       <motion.div
         style={{ translateY: parallax }}
-        className="bg-red-500 h-[100vh] sm:h-[133vh] md:h-[200vh]"
+        className="bg-foreground h-[100vh] sm:h-[133vh] md:h-[200vh]"
       ></motion.div>
     </section>
   );

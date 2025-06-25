@@ -23,19 +23,17 @@
   --font-neue-montreal: var(--font-neue-montreal);
 }
 
-
-:root, :root.light {
+:root,
+:root.light {
   --background: #fff;
   --foreground: #000;
-  --accent: #fd2c2a;
+  --accent: #fe1300;
 }
 :root.dark {
   --background: #000;
   --foreground: #fff;
-  --accent: #fd2c2a;
+  --accent: #fe1300;
 }
-
-
 
 body {
   background: var(--background);
@@ -47,6 +45,23 @@ body {
     sans-serif;
 }
 
+/* Gradient */
+.bg-accent-gradient {
+  /* bottom-to-top fade */
+  background: linear-gradient(to top, var(--accent) 0%, transparent 100%);
+}
+
+.text-outline {
+  color: transparent !important;
+  -webkit-text-stroke-color: var(--foreground);
+  -webkit-text-stroke-width: 3px;
+}
+@media (max-width: 640px) {
+  .text-outline {
+    -webkit-text-stroke-width: 2px;
+  }
+}
+
 /* SPACING */
 
 .side-padding {
@@ -55,7 +70,7 @@ body {
 
 .grid-system {
   /* side padding */
-  @apply px-[padding-inline:var(--mobile-margin)] md:[padding-inline:var(--tablet-margin)] xl:[padding-inline:var(--desktop-margin)];
+  @apply px-[padding-inline:var(--mobile-margin)] md:[padding-inline:var(--tablet-margin)] xl:[padding-inline:var(--desktop-margin)] ;
 
   /* columns */
   @apply grid grid-cols-4 md:grid-cols-8 xl:grid-cols-12;
@@ -70,6 +85,10 @@ body {
   font-weight: 500;
   line-height: 90%;
   @apply text-[clamp(64px,10.41vw,180px)];
+}
+
+.display-1.bold {
+  font-weight: 700;
 }
 
 .display-1.spaced {
@@ -101,6 +120,13 @@ body {
   font: var(--font-neue-montreal);
   line-height: 120%;
   font-weight: 400;
+  @apply xs:text-[32px] text-[26px] md:text-[45px] xl:text-[56px];
+}
+
+.h2-medium {
+  font: var(--font-neue-montreal);
+  line-height: 120%;
+  font-weight: 500;
   @apply xs:text-[32px] text-[26px] md:text-[45px] xl:text-[56px];
 }
 

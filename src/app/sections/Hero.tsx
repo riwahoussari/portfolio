@@ -20,7 +20,7 @@ export default function Hero() {
     },
   };
   return (
-    <section className="relative flex flex-col pb-20 pt-32 md:min-h-dvh md:justify-between">
+    <section className="relative  flex flex-col pb-20 pt-32 md:min-h-dvh md:justify-between">
       <div className="grid-system">
         <h1 className="h1-regular col-span-4 xl:col-span-5">
           Web Designer & Developer

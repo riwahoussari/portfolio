@@ -9,7 +9,7 @@ export default function LenisScrollWrapper({
   children: ReactNode;
 }) {
   useEffect(() => {
-    const lenis = new Lenis();
+    const lenis = new Lenis({duration: 4});
     function raf(time: number) {
       lenis.raf(time);
       requestAnimationFrame(raf);
