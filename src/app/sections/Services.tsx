@@ -30,7 +30,7 @@ const SKILLS = [
     list: ["Nodejs", "Django", "Flask", "MongoDB", "MySQL", "APIs"],
   },
 ];
-const COLORS = ["red",  "pink", "purple", "green", "yellow", "orange"];
+const COLORS = [ "pink", "purple", "blue", "green", "yellow", "orange"];
 
 export default function Services() {
   // marquee
@@ -211,6 +211,11 @@ export default function Services() {
         />
       </div>
 
+      {/* colors loader */}
+      <div
+        aria-hidden
+        className="h-0 w-0 border hover:border-green-500 hover:border-orange-500 hover:border-pink-500 hover:border-purple-500 hover:border-blue-500 hover:border-yellow-500 hover:text-green-500 hover:text-orange-500 hover:text-pink-500 hover:text-purple-500 hover:text-blue-500 hover:text-yellow-500 opacity-0"
+      ></div>
       {/* Services */}
       <div className="z-2 relative ms-auto mt-[20vh] grid pb-[min(33vh,20vw)] max-lg:pb-[100vh] lg:w-2/3 xl:w-[60%] 2xl:w-1/2">
         <div className="bg-background absolute left-0 right-0 top-0 h-dvh lg:hidden" />
@@ -257,9 +262,7 @@ export default function Services() {
                 {skill.list.map((item, j) => (
                   <motion.p
                     key={item}
-                    className={
-                      `md:text-[max(30px,2vw)]! xs:text-[24px]! border-foreground xs:px-5 hover:text-${COLORS[j]}-500  cursor-crosshair rounded-[10px] border-2 px-4 py-2 text-[20px] duration-150 ease-in-out hover:rotate-12 sm:rounded-xl md:px-6 md:py-3 hover:border-${COLORS[j]}-500`
-                    }
+                    className={`md:text-[max(30px,2vw)]! xs:text-[24px]! border-foreground xs:px-5 hover:text-${COLORS[j]}-500 cursor-crosshair rounded-[10px] border-2 px-4 py-2 text-[20px] duration-150 ease-in-out hover:rotate-12 sm:rounded-xl md:px-6 md:py-3 hover:border-${COLORS[j]}-500`}
                     initial={{ opacity: 0 }}
                     animate={isInViews[i] ? { opacity: 1 } : { opacity: 0 }}
                     transition={{

@@ -47,11 +47,11 @@ export default function Home() {
       <NoSSRInitialRevealAnim />
       <Navbar />
       <main>
-        <Hero />
+        {/* <Hero />
         <About />
         <Adjectives />
         <Services />
-        <Works />
+        <Works /> */}
         <Testimonials />
       </main>
       <Footer />
