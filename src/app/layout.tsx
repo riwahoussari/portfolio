@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "./components/Navbar/Navbar";
 import LenisScrollWrapper from "./components/Global/LenisScrollWrapper";
 import { ThemeProvider } from "next-themes";
+import Footer from "./components/Footer/Footer";
 
 export const neueMontreal = localFont({
   src: [
@@ -73,6 +74,7 @@ export default function RootLayout({
           <LenisScrollWrapper>
             <Navbar />
             <main>{children}</main>
+            <Footer />
           </LenisScrollWrapper>
         </ThemeProvider>
       </body>

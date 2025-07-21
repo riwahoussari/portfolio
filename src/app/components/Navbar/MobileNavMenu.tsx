@@ -13,7 +13,7 @@ const LINKS = [
   },
   {
     name: "Testimonials",
-    link: "/contact",
+    link: "/testimonials",
   },
   {
     name: "Contact",

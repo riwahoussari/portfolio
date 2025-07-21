@@ -61,8 +61,16 @@ export default function Testimonials() {
     };
   }, [testimonialDiv1ScaleY1, testimonialDiv1ScaleY2]);
 
+  // opacity fade out when footer comes in
+  const opacityRef = useRef(null);
+  const { scrollYProgress: opacityScroll } = useScroll({
+    target: opacityRef,
+    offset: ["start start", "end end"],
+  });
+  const fadeOutOpacity = useTransform(opacityScroll, [0, 0.5], [1, 0]);
+
   return (
-    <section id="testimonials" className="pt-[25vh] md:pt-[50vh]">
+    <section id="testimonials" className="bg-background pt-[25vh] md:pt-[50vh]">
       {/* title */}
       <motion.div
         style={{
@@ -106,22 +114,27 @@ export default function Testimonials() {
       </motion.div>
 
       {/* testimonial 2 */}
-      <motion.div
-        style={{ scaleY: testimonialDiv2ScaleY  }}
-        className="mx-auto flex h-dvh max-w-[80vw] origin-top flex-col items-center justify-center sm:max-w-[90vw]"
-      >
-        <div className="w-10">
-          <QuotationsSvg />
-        </div>
-        <p className="h2-medium mb-11 mt-20 max-w-[1000px] text-center">
-          Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi.
-          Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi.
-        </p>
+      <div ref={opacityRef} className="h-[200vh]">
+        <motion.div
+          style={{ scaleY: testimonialDiv2ScaleY, opacity: fadeOutOpacity }}
+          className="bg-background sticky top-0 mx-auto flex h-dvh max-w-[80vw] origin-top flex-col items-center justify-center sm:max-w-[90vw]"
+        >
+          <div className="w-10">
+            <QuotationsSvg />
+          </div>
+          <p className="h2-medium mb-11 mt-20 max-w-[1000px] text-center">
+            Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa
+            mi. Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et
+            massa mi.
+          </p>
 
-        <p className="text-[max(16px,1.5vw)]! max-2xs:text-[14px]! text-center font-light opacity-70 md:max-w-[70vw]">
-          @arthyl
-        </p>
-      </motion.div>
+          <p className="text-[max(16px,1.5vw)]! max-2xs:text-[14px]! text-center font-light opacity-70 md:max-w-[70vw]">
+            @arthyl
+          </p>
+        </motion.div>
+      </div>
+
+      {/* <div className="bg-accent h-dvh"></div> */}
     </section>
   );
 }

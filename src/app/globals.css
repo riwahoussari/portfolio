@@ -67,6 +67,12 @@ body {
 .side-padding {
   @apply px-[padding-inline:var(--mobile-margin)] md:[padding-inline:var(--tablet-margin)] xl:[padding-inline:var(--desktop-margin)];
 }
+.footer-y-padding {
+  @apply py-[padding-block:calc(var(--mobile-margin)*1)] md:[padding-block:calc(var(--tablet-margin)*0.5)] xl:[padding-block:calc(var(--desktop-margin)*0.5)];
+}
+.footer-b-padding {
+  @apply pb-[padding-bottom:calc(var(--mobile-margin)*1)] md:[padding-bottom:calc(var(--tablet-margin)*0.5)] xl:[padding-bottom:calc(var(--desktop-margin)*0.5)];
+}
 .side-padding-15 {
   @apply px-[padding-inline:calc(var(--mobile-margin)*1.5)] md:[padding-inline:calc(var(--tablet-margin)*1.5)] xl:[padding-inline:calc(var(--desktop-margin)*1.5)];
 }

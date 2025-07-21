@@ -7,7 +7,7 @@ import {
   useInView,
   useMotionValueEvent,
 } from "motion/react";
-import {  useRef, useState } from "react";
+import { useRef, useState } from "react";
 
 export default function About() {
   const sectionRef = useRef(null);
@@ -54,6 +54,7 @@ export default function About() {
       <p className="h2-regular col-span-4 flex flex-wrap md:col-span-6 md:col-start-3 xl:col-span-8 xl:col-start-5">
         {words.map((word, i) => (
           <Word
+            index={i}
             key={i}
             start={i / words.length}
             end={(i + 1) / words.length}
@@ -74,16 +75,28 @@ function Word({
   end,
   scrollProgress,
   transitionComplete,
+  index,
 }: {
   children: string;
   start: number;
   end: number;
   scrollProgress: MotionValue<number>;
   transitionComplete: boolean;
+  index: number;
 }) {
-  const opacity = useTransform(scrollProgress, [start, end], [0.3, 1]);
+  const spanRef = useRef(null);
+  const isInView = useInView(spanRef, {
+    once: false,
+  });
+  // const opacity = useTransform(scrollProgress, [start, end], [0.3, 1]);
   return (
-    <motion.span style={{  opacity: transitionComplete ? 1 : opacity}} className="whitespace-pre">
+    <motion.span
+      ref={spanRef}
+      initial={{ opacity: transitionComplete ? 1 : 0.0 }}
+      animate={{ opacity: transitionComplete ? 1 : isInView ? 1 : 0.0 }}
+      transition={{ duration: 0.4, ease: "easeInOut", delay: 0.15 + index * 0.015 }}
+      className="whitespace-pre"
+    >
       {children}{" "}
     </motion.span>
   );

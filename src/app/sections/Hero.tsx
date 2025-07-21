@@ -4,7 +4,6 @@ import Image from "next/image";
 import ArrowSvg from "../components/SVGs/ArrowSvg";
 import MyImage from "../../../public/me.png";
 import ThemeButton from "../components/Global/ThemeButton";
-import { useState } from "react";
 
 export default function Hero() {
   const marqueeVariants = {
@@ -20,31 +19,9 @@ export default function Hero() {
       },
     },
   };
-
-  const vw = window.innerWidth;
-  const vh = window.innerHeight;
-
-  const [revealAnimEnded, setRevealAnimEnded] = useState(false);
+ 
   return (
     <>
-      {/* initial reveal svg */}
-      {!revealAnimEnded && (
-        <svg
-          className="z-2000 fixed top-0 h-[calc(100vh+30vw)] w-full border border-green-400"
-          fill="var(--color-foreground)"
-        >
-          <motion.path
-            initial={{
-              d: `M0 0 L0 ${vh + 0.3 * vw} Q${vw / 2} ${vh - 0.1 * vw} ${vw} ${vh + 0.3 * vw} L${vw} 0 Z`,
-            }}
-            animate={{
-              d: `M0 0 L0 0 Q${vw / 2} 0 ${vw} 0 L${vw} 0 Z`,
-            }}
-            transition={{ duration: 0.7, ease: "easeInOut" }}
-            onAnimationComplete={() => setRevealAnimEnded(true)}
-          />
-        </svg>
-      )}
 
       {/* hero */}
       <section
@@ -52,7 +29,7 @@ export default function Hero() {
         className="relative flex flex-col pb-20 pt-32 md:min-h-dvh md:justify-between"
       >
         <div className="grid-system">
-          <h1 className="h1-regular col-span-4 whitespace-pre xl:col-span-5">
+          <h1 className="h1-regular col-span-4 flex flex-wrap whitespace-pre xl:col-span-5">
             {"Web Designer & Developer".split(" ").map((word, i) => (
               <span key={i} className="inline-block overflow-y-hidden">
                 <motion.span
