@@ -107,6 +107,7 @@ export default function FooterForm() {
               value={phone}
               onChange={setPhone}
               defaultCountry="lb"
+              name="phone"
             />
           </div>
           <p
