@@ -8,7 +8,10 @@ import Testimonials from "./sections/Testimonials";
 
 import dynamic from "next/dynamic";
 import useMousePosition from "./hooks/useMousePosition";
-import {motion} from 'motion/react'
+import { motion } from "motion/react";
+import { useHover } from "./hooks/HoverContext";
+import Navbar from "./components/Navbar/Navbar";
+import Footer from "./components/Footer/Footer";
 
 const NoSSRInitialRevealAnim = dynamic(
   () => import("./components/Global/InitialRevealAnim"),
@@ -19,29 +22,39 @@ const NoSSRInitialRevealAnim = dynamic(
 
 export default function Home() {
   const { x, y } = useMousePosition();
+  const { isHovering } = useHover();
 
   return (
-    <>
+    <div className="relative w-full overflow-x-clip">
       {/* cursor */}
       <motion.div
-        className="absolute z-0  aspect-square w-6  rounded-full bg-white opacity-0 mix-blend-difference lg:opacity-100"
+        className="z-1000 absolute aspect-square w-4 rounded-full bg-white opacity-0 mix-blend-difference lg:opacity-100"
         animate={{
-          top: y ,
-          left: x ,
-          translate: "-30px 30px",
+          top: y,
+          left: x,
+          translate: isHovering ? "30px 0px" : "30px 30px",
+          scale: isHovering ? 1.2 : 1,
+          backgroundColor: isHovering ? "#fd2c2a" : "#ffffff",
         }}
+        style={
+          isHovering
+            ? { mixBlendMode: "normal" }
+            : { mixBlendMode: "difference" }
+        }
         transition={{ type: "tween", ease: "backOut", duration: 0.7 }}
-      >
-        
-      </motion.div>
+      ></motion.div>
 
       <NoSSRInitialRevealAnim />
-      <Hero />
-      <About />
-      <Adjectives />
-      <Services />
-      <Works />
-      <Testimonials />
-    </>
+      <Navbar />
+      <main>
+        <Hero />
+        <About />
+        <Adjectives />
+        <Services />
+        <Works />
+        <Testimonials />
+      </main>
+      <Footer />
+    </div>
   );
 }

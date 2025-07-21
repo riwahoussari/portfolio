@@ -5,6 +5,7 @@ import Navbar from "./components/Navbar/Navbar";
 import LenisScrollWrapper from "./components/Global/LenisScrollWrapper";
 import { ThemeProvider } from "next-themes";
 import Footer from "./components/Footer/Footer";
+import { HoverProvider } from "./hooks/HoverContext";
 
 export const neueMontreal = localFont({
   src: [
@@ -71,11 +72,9 @@ export default function RootLayout({
         className={`${generalSans.variable} ${neueMontreal.className} antialiased`}
       >
         <ThemeProvider attribute="class" defaultTheme="system">
-          <LenisScrollWrapper>
-            <Navbar />
-            <main>{children}</main>
-            <Footer />
-          </LenisScrollWrapper>
+          <HoverProvider>
+            <LenisScrollWrapper>{children}</LenisScrollWrapper>
+          </HoverProvider>
         </ThemeProvider>
       </body>
     </html>

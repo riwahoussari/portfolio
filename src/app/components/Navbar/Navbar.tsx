@@ -72,7 +72,7 @@ export default function Navbar() {
   return (
     <motion.header
       className={
-        "z-1000 side-padding sticky top-0 flex w-full items-center justify-between bg-transparent py-6 " +
+        "z-100 side-padding sticky top-0 flex w-full items-center justify-between bg-transparent py-6 " +
         (mobileMenuOpen ? " sm:backdrop-blur-md" : " backdrop-blur-md")
       }
       initial={{ y: "-100%", opacity: 0 }}

@@ -2,7 +2,7 @@
 import { motion } from "motion/react";
 import Image from "next/image";
 import ArrowSvg from "../components/SVGs/ArrowSvg";
-import MyImage from "../../../public/me.png";
+import MyImageGray from "../../../public/me-gray.png";
 import ThemeButton from "../components/Global/ThemeButton";
 
 export default function Hero() {
@@ -19,10 +19,10 @@ export default function Hero() {
       },
     },
   };
- 
+
+
   return (
     <>
-
       {/* hero */}
       <section
         id="riwa"
@@ -149,12 +149,12 @@ export default function Hero() {
               initial={{ clipPath: "inset(0 0 100% 0)" }}
               animate={{ clipPath: "inset(0 0 0 0)" }}
               transition={{ duration: 0.8, ease: "easeInOut", delay: 0.5 }}
-              className="max-md:aspect-5/6 relative col-span-4 max-md:max-w-[380px] max-md:translate-x-1/4 md:col-start-5 xl:col-start-9"
+              className="max-md:aspect-5/6 relative col-span-4 bg-green-300 max-md:max-w-[380px] max-md:translate-x-1/4 md:col-start-5 xl:col-start-9"
             >
               <Image
                 alt="Image of Riwa Houssari Playing Basketball."
-                src={MyImage}
-                className="object-cover object-top"
+                src={MyImageGray}
+                className=" object-cover object-top"
                 placeholder="blur"
               />
             </motion.div>
@@ -164,11 +164,11 @@ export default function Hero() {
             <div className="max-md:aspect-5/6 relative col-span-4 max-md:max-w-[380px] max-md:translate-x-1/4 md:col-start-5 xl:col-start-9">
               <Image
                 alt="Image of Riwa Houssari Playing Basketball."
-                src={MyImage}
+                src={MyImageGray}
                 className="object-cover object-top opacity-0"
                 aria-hidden
               />
-              <div className="z-100 absolute right-3 top-3 w-[60px]">
+              <div className="z-10 absolute right-3 top-3 w-[60px]">
                 <ThemeButton className="bg-background group cursor-pointer p-3 duration-300 ease-in-out hover:scale-110 hover:rounded-sm" />
               </div>
             </div>

@@ -30,6 +30,7 @@ const SKILLS = [
     list: ["Nodejs", "Django", "Flask", "MongoDB", "MySQL", "APIs"],
   },
 ];
+const COLORS = ["red",  "pink", "purple", "green", "yellow", "orange"];
 
 export default function Services() {
   // marquee
@@ -256,7 +257,9 @@ export default function Services() {
                 {skill.list.map((item, j) => (
                   <motion.p
                     key={item}
-                    className="md:text-[max(30px,2vw)]! xs:text-[24px]! border-foreground xs:px-5 rounded-[10px] border-2 px-4 py-2 text-[20px] sm:rounded-xl md:px-6 md:py-3"
+                    className={
+                      `md:text-[max(30px,2vw)]! xs:text-[24px]! border-foreground xs:px-5 hover:text-${COLORS[j]}-500  cursor-crosshair rounded-[10px] border-2 px-4 py-2 text-[20px] duration-150 ease-in-out hover:rotate-12 sm:rounded-xl md:px-6 md:py-3 hover:border-${COLORS[j]}-500`
+                    }
                     initial={{ opacity: 0 }}
                     animate={isInViews[i] ? { opacity: 1 } : { opacity: 0 }}
                     transition={{

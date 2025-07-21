@@ -282,7 +282,7 @@ export default function Works() {
               </div>
             </motion.div>
 
-            <div className="z-100 relative translate-y-[100vh] text-white mix-blend-difference sm:translate-y-[150vh] lg:translate-y-[min(200vh,200vw)]">
+            <div className="z-10 relative translate-y-[100vh] text-white mix-blend-difference sm:translate-y-[150vh] lg:translate-y-[min(200vh,200vw)]">
               <h2 className="display-1 text-[max(64px,10.41vw)]! max-xs:text-[12vw]! side-padding mb-[50vh] text-right md:mb-[min(60vh,60vw)] xl:mb-[min(80vh,80vw)]">
                 ARTHYL.COM
               </h2>
@@ -341,7 +341,7 @@ export default function Works() {
               </div>
             </motion.div>
 
-            <div className="z-100 relative translate-y-[100vh] text-white mix-blend-difference sm:translate-y-[150vh] lg:translate-y-[min(200vh,200vw)]">
+            <div className="z-10 relative translate-y-[100vh] text-white mix-blend-difference sm:translate-y-[150vh] lg:translate-y-[min(200vh,200vw)]">
               <h2 className="display-1 text-[max(52px,9vw)]! max-xs:text-[10vw]! side-padding mb-[50vh] text-right md:mb-[min(60vh,60vw)] xl:mb-[min(80vh,80vw)]">
                 HAIFAABITAR.COM
               </h2>

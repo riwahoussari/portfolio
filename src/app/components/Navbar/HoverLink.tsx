@@ -1,3 +1,5 @@
+"use client";
+import { useHover } from "@/app/hooks/HoverContext";
 import Link from "next/link";
 import React from "react";
 
@@ -6,21 +8,31 @@ type HoverLinkProps = {
 } & React.ComponentProps<typeof Link>;
 
 export default function HoverLink({ children, ...props }: HoverLinkProps) {
+  const { setIsHovering } = useHover();
   return (
-    
-    <Link {...props} className="group relative flex lg:justify-start justify-center overflow-hidden">
+    <Link
+      onMouseLeave={() => {
+        setIsHovering(false);
+      }}
+      onMouseEnter={() => {
+        setIsHovering(true);
+      }}
+      {...props}
+      className="group relative flex justify-center overflow-hidden lg:justify-start"
+    >
       {/* Invisible placeholder to maintain height */}
-      <span className="opacity-0 whitespace-pre">{renderLetters(children)}</span>
+      <span className="whitespace-pre opacity-0">
+        {renderLetters(children)}
+      </span>
       {/* Text moves up & out of view on hover */}
       <span className="absolute bottom-0 whitespace-pre" aria-hidden>
-        {renderLetters(children, "out")} 
+        {renderLetters(children, "out")}
       </span>
       {/* Text moves up & into view on hover  */}
       <span className="absolute top-full whitespace-pre" aria-hidden>
-        {renderLetters(children, "in")} 
+        {renderLetters(children, "in")}
       </span>
     </Link>
-    
   );
 }
 
