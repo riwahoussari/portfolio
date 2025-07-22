@@ -1,6 +1,7 @@
 "use client";
 import { useScroll, useTransform, motion, useMotionValue } from "motion/react";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useHover } from "../hooks/HoverContext";
 
 export default function Works() {
   ///////////////////////////// update video clip path inset based on aspect ratio
@@ -220,145 +221,168 @@ export default function Works() {
     };
   }, []);
 
+  //// cursor/link on video hover
+  const [videoHover, setVideoHover] = useState(0);
+  const { setIsHovering } = useHover();
+
+  useEffect(() => {
+    setIsHovering({
+      hover: videoHover ? "video" : "none",
+      videoNum: videoHover,
+    });
+  }, [videoHover]);
+
   return (
-    <section  id="projects" style={{ height: adjustedHeight }}>
-        <div ref={sectionRef}>
-          {/* title */}
-          <div
-            className="z-2 relative h-[200vh]"
-            style={{ clipPath: "inset(0 0 100vh 0)" }}
-          >
-            <div className="grid-system bg-background sticky top-0 flex h-dvh items-center overflow-hidden">
-              <div className="relative col-span-7 max-sm:-translate-y-1/2 xl:col-span-10">
-                <h2 className="display-1 text-[max(64px,10.41vw)]! max-2xs:text-[50px]! flex flex-col whitespace-pre">
-                  <span>SELECTED</span>{" "}
-                  <span className="mt-2 text-right">WORKS</span>
-                </h2>
-                <p className="text-[max(18px,2vw)]! body-1 absolute left-0 top-[125%] w-[min(250px,80%)] opacity-80 sm:top-[65%] sm:w-[40%]">
-                  Some opportunities and projects that I’m proud of!
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* arthyl */}
-          <div
-            ref={video1Ref}
-            className="z-1 bg-background relative h-[500vh] -translate-y-[200vh] sm:h-[600vh] lg:h-[min(700vh,750vw)]"
-            style={{ clipPath: "inset(0 0 100vh 0)" }}
-          >
-            <motion.div
-              style={{ scale: finalScale1 }}
-              className="sticky top-[200vh] w-full overflow-hidden"
-            >
-              <div className="z-1 relative h-dvh w-full">
-                <motion.div
-                  style={{ clipPath: finalClipPath1 }}
-                  className="z-1 absolute min-h-dvh min-w-full object-cover blur-lg brightness-75"
-                >
-                  <video
-                    src="/arthyl-screen-recording.mp4"
-                    className="min-h-dvh min-w-full object-cover"
-                    autoPlay
-                    muted
-                    loop
-                  ></video>
-                </motion.div>
-                <div className="z-1 absolute flex h-dvh w-full items-stretch justify-center">
-                  <video
-                    ref={videoRef1}
-                    src="/arthyl-screen-recording.mp4"
-                    className="max-h-dvh object-contain"
-                    autoPlay
-                    muted
-                    loop
-                    onLoadedMetadata={(e) => {
-                      const video = e.currentTarget;
-                      video.style.width = `${video.videoWidth}px`;
-                      video.style.height = `${video.videoHeight}px`;
-                    }}
-                  ></video>
-                </div>
-              </div>
-            </motion.div>
-
-            <div className="z-10 relative translate-y-[100vh] text-white mix-blend-difference sm:translate-y-[150vh] lg:translate-y-[min(200vh,200vw)]">
-              <h2 className="display-1 text-[max(64px,10.41vw)]! max-xs:text-[12vw]! side-padding mb-[50vh] text-right md:mb-[min(60vh,60vw)] xl:mb-[min(80vh,80vw)]">
-                ARTHYL.COM
+    <section id="projects" style={{ height: adjustedHeight }}>
+      <div ref={sectionRef}>
+        {/* title */}
+        <div
+          className="z-2 relative h-[200vh]"
+          style={{ clipPath: "inset(0 0 100vh 0)" }}
+        >
+          <div className="grid-system bg-background sticky top-0 flex h-dvh items-center overflow-hidden">
+            <div className="relative col-span-7 max-sm:-translate-y-1/2 xl:col-span-10">
+              <h2 className="display-1 text-[max(64px,10.41vw)]! max-2xs:text-[50px]! flex flex-col whitespace-pre">
+                <span>SELECTED</span>{" "}
+                <span className="mt-2 text-right">WORKS</span>
               </h2>
-              <p className="grid-system text-[max(16px,1.6vw)]!">
-                <span className="col-span-4 max-md:max-w-[485px] md:min-w-[485px] xl:col-span-5">
-                  Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                  Nobis repellendus voluptatem voluptates excepturi nam. Impedit
-                  reprehenderit modi totam delectus, ut a eum tempora quam
-                  omnis, maiores vero molestiae labore, consequatur assumenda
-                  accusamus blanditiis cum. Dolor tempora ducimus impedit
-                  nesciunt quod similique magni sapiente sint! Nisi fugit
-                  provident iste perspiciatis autem.
-                </span>
-              </p>
-            </div>
-          </div>
-
-          {/* haifaa bitar */}
-          <div
-            ref={video2Ref}
-            className="bg-background relative z-0 h-[500vh] -translate-y-[400vh] sm:h-[600vh] lg:h-[min(700vh,750vw)]"
-            style={{ clipPath: "inset(0 0 100vh 0)" }}
-          >
-            <motion.div
-              style={{ scale: finalScale2 }}
-              className="sticky top-[400vh] w-full overflow-hidden"
-            >
-              <div className="z-1 relative h-dvh w-full">
-                <motion.div
-                  style={{ clipPath: finalClipPath2 }}
-                  className="z-1 absolute min-h-dvh min-w-full object-cover blur-lg brightness-75"
-                >
-                  <video
-                    src="/haifaa-bitar-screen-recording.mp4"
-                    className="min-h-dvh min-w-full object-cover"
-                    autoPlay
-                    muted
-                    loop
-                  ></video>
-                </motion.div>
-                <div className="z-1 absolute flex h-dvh w-full items-stretch justify-center">
-                  <video
-                    ref={videoRef2}
-                    src="/haifaa-bitar-screen-recording.mp4"
-                    className="max-h-dvh object-contain"
-                    autoPlay
-                    muted
-                    loop
-                    onLoadedMetadata={(e) => {
-                      const video = e.currentTarget;
-                      video.style.width = `${video.videoWidth}px`;
-                      video.style.height = `${video.videoHeight}px`;
-                    }}
-                  ></video>
-                </div>
-              </div>
-            </motion.div>
-
-            <div className="z-10 relative translate-y-[100vh] text-white mix-blend-difference sm:translate-y-[150vh] lg:translate-y-[min(200vh,200vw)]">
-              <h2 className="display-1 text-[max(52px,9vw)]! max-xs:text-[10vw]! side-padding mb-[50vh] text-right md:mb-[min(60vh,60vw)] xl:mb-[min(80vh,80vw)]">
-                HAIFAABITAR.COM
-              </h2>
-              <p className="grid-system text-[max(16px,1.6vw)]!">
-                <span className="col-span-4 max-md:max-w-[485px] md:min-w-[485px] xl:col-span-5">
-                  Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                  Nobis repellendus voluptatem voluptates excepturi nam. Impedit
-                  reprehenderit modi totam delectus, ut a eum tempora quam
-                  omnis, maiores vero molestiae labore, consequatur assumenda
-                  accusamus blanditiis cum. Dolor tempora ducimus impedit
-                  nesciunt quod similique magni sapiente sint! Nisi fugit
-                  provident iste perspiciatis autem.
-                </span>
+              <p className="text-[max(18px,2vw)]! body-1 absolute left-0 top-[125%] w-[min(250px,80%)] opacity-80 sm:top-[65%] sm:w-[40%]">
+                Some opportunities and projects that I’m proud of!
               </p>
             </div>
           </div>
         </div>
+
+        {/* arthyl */}
+        <div
+          ref={video1Ref}
+          className="z-1 bg-background relative h-[500vh] -translate-y-[200vh] sm:h-[600vh] lg:h-[min(700vh,750vw)]"
+          style={{ clipPath: "inset(0 0 100vh 0)" }}
+        >
+          <motion.div
+            style={{ scale: finalScale1 }}
+            className="sticky top-[200vh] w-full overflow-hidden"
+          >
+            <div className="z-1 relative h-dvh w-full">
+              <motion.div
+                style={{ clipPath: finalClipPath1 }}
+                className="z-1 absolute min-h-dvh min-w-full object-cover blur-lg brightness-75"
+              >
+                <video
+                  src="/arthyl-screen-recording.mp4"
+                  className="min-h-dvh min-w-full object-cover"
+                  autoPlay
+                  muted
+                  loop
+                ></video>
+              </motion.div>
+              <a target="_blank" href="https://arthyl-nextjs.vercel.app/" className="z-1 absolute flex h-dvh w-full items-stretch justify-center">
+                <video
+                  ref={videoRef1}
+                  src="/arthyl-screen-recording.mp4"
+                  className="max-h-dvh cursor-pointer object-contain"
+                  autoPlay
+                  muted
+                  loop
+                  onMouseEnter={() => {
+                    setVideoHover(1);
+                  }}
+                  onMouseLeave={() => {
+                    setVideoHover(0);
+                  }}
+                  onLoadedMetadata={(e) => {
+                    const video = e.currentTarget;
+                    video.style.width = `${video.videoWidth}px`;
+                    video.style.height = `${video.videoHeight}px`;
+                  }}
+                ></video>
+              </a>
+            </div>
+          </motion.div>
+
+          <div className="relative z-10 translate-y-[100vh] text-white mix-blend-difference sm:translate-y-[150vh] lg:translate-y-[min(200vh,200vw)]">
+            <h2 className="display-1 text-[max(64px,10.41vw)]! max-xs:text-[12vw]! side-padding mb-[50vh] text-right md:mb-[min(60vh,60vw)] xl:mb-[min(80vh,80vw)]">
+              ARTHYL.COM
+            </h2>
+            <p className="grid-system text-[max(16px,1.6vw)]!">
+              <span className="col-span-4 max-md:max-w-[485px] md:min-w-[485px] xl:col-span-5">
+                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nobis
+                repellendus voluptatem voluptates excepturi nam. Impedit
+                reprehenderit modi totam delectus, ut a eum tempora quam omnis,
+                maiores vero molestiae labore, consequatur assumenda accusamus
+                blanditiis cum. Dolor tempora ducimus impedit nesciunt quod
+                similique magni sapiente sint! Nisi fugit provident iste
+                perspiciatis autem.
+              </span>
+            </p>
+          </div>
+        </div>
+
+        {/* haifaa bitar */}
+        <div
+          ref={video2Ref}
+          className="bg-background relative z-0 h-[500vh] -translate-y-[400vh] sm:h-[600vh] lg:h-[min(700vh,750vw)]"
+          style={{ clipPath: "inset(0 0 100vh 0)" }}
+        >
+          <motion.div
+            style={{ scale: finalScale2 }}
+            className="sticky top-[400vh] w-full overflow-hidden"
+          >
+            <div className="z-1 relative h-dvh w-full">
+              <motion.div
+                style={{ clipPath: finalClipPath2 }}
+                className="z-1 absolute min-h-dvh min-w-full object-cover blur-lg brightness-75"
+              >
+                <video
+                  src="/haifaa-bitar-screen-recording.mp4"
+                  className="min-h-dvh min-w-full object-cover"
+                  autoPlay
+                  muted
+                  loop
+                ></video>
+              </motion.div>
+              <a target="_blank" href="https://haifaabitar.com/" className="z-1 absolute flex h-dvh w-full items-stretch justify-center">
+                <video
+                  ref={videoRef2}
+                  src="/haifaa-bitar-screen-recording.mp4"
+                  className="max-h-dvh cursor-pointer object-contain"
+                  autoPlay
+                  muted
+                  loop
+                  onMouseEnter={() => {
+                    setVideoHover(2);
+                  }}
+                  onMouseLeave={() => {
+                    setVideoHover(0);
+                  }}
+                  onLoadedMetadata={(e) => {
+                    const video = e.currentTarget;
+                    video.style.width = `${video.videoWidth}px`;
+                    video.style.height = `${video.videoHeight}px`;
+                  }}
+                ></video>
+              </a>
+            </div>
+          </motion.div>
+
+          <div className="relative z-10 translate-y-[100vh] text-white mix-blend-difference sm:translate-y-[150vh] lg:translate-y-[min(200vh,200vw)]">
+            <h2 className="display-1 text-[max(52px,9vw)]! max-xs:text-[10vw]! side-padding mb-[50vh] text-right md:mb-[min(60vh,60vw)] xl:mb-[min(80vh,80vw)]">
+              HAIFAABITAR.COM
+            </h2>
+            <p className="grid-system text-[max(16px,1.6vw)]!">
+              <span className="col-span-4 max-md:max-w-[485px] md:min-w-[485px] xl:col-span-5">
+                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nobis
+                repellendus voluptatem voluptates excepturi nam. Impedit
+                reprehenderit modi totam delectus, ut a eum tempora quam omnis,
+                maiores vero molestiae labore, consequatur assumenda accusamus
+                blanditiis cum. Dolor tempora ducimus impedit nesciunt quod
+                similique magni sapiente sint! Nisi fugit provident iste
+                perspiciatis autem.
+              </span>
+            </p>
+          </div>
+        </div>
+      </div>
     </section>
   );
 }

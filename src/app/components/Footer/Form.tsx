@@ -60,10 +60,10 @@ export default function FooterForm() {
               setFullName(e.target.value);
             }}
             onMouseEnter={() => {
-              setIsHovering(true);
+              setIsHovering({hover: "normal", videoNum: 0});
             }}
             onMouseLeave={() => {
-              setIsHovering(false);
+              setIsHovering({hover: "none", videoNum: 0});
             }}
             required
             type="text"
@@ -96,10 +96,10 @@ export default function FooterForm() {
             }}
             className="cursor-pointer rounded-full border-2 duration-200 ease-in-out hover:scale-105 focus:scale-105"
             onMouseEnter={() => {
-              setIsHovering(true);
+              setIsHovering({hover: "normal", videoNum: 0});
             }}
             onMouseLeave={() => {
-              setIsHovering(false);
+              setIsHovering({hover: "none", videoNum: 0});
             }}
           >
             <PhoneInput
@@ -124,10 +124,10 @@ export default function FooterForm() {
         <div>
           <textarea
             onMouseEnter={() => {
-              setIsHovering(true);
+              setIsHovering({hover: "normal", videoNum: 0});
             }}
             onMouseLeave={() => {
-              setIsHovering(false);
+              setIsHovering({hover: "none", videoNum: 0});
             }}
             value={message}
             onChange={(e) => {

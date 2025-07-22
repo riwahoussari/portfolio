@@ -1,10 +1,10 @@
-"use client"
+"use client";
 import { createContext, useContext, useState, ReactNode } from "react";
 
 // Define types
 type HoverContextType = {
-  isHovering: boolean;
-  setIsHovering: (hovering: boolean) => void;
+  isHovering: { hover: string; videoNum: number };
+  setIsHovering: (hovering: { hover: string; videoNum: number }) => void;
 };
 
 // Create context
@@ -12,7 +12,10 @@ const HoverContext = createContext<HoverContextType | undefined>(undefined);
 
 // Provider component
 export const HoverProvider = ({ children }: { children: ReactNode }) => {
-  const [isHovering, setIsHovering] = useState(false);
+  const [isHovering, setIsHovering] = useState({
+    hover: "none",
+    videoNum: 0,
+  });
 
   return (
     <HoverContext.Provider value={{ isHovering, setIsHovering }}>

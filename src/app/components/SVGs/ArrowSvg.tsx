@@ -18,6 +18,7 @@ export default function ArrowSvg({
         d="M1 1L32 32M32 32V5.5M32 32H5.5"
         strokeWidth={strokeWidth}
         className="stroke-foreground"
+        
       />
     </svg>
   );

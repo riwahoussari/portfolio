@@ -56,8 +56,8 @@ export default function ThemeButton(
   return (
     <button
       {...props}
-      onMouseEnter={() => setIsHovering(true)}
-      onMouseLeave={() => setIsHovering(false)}
+      onMouseEnter={() => setIsHovering({hover: "normal", videoNum: 0})}
+      onMouseLeave={() => setIsHovering({hover: "none", videoNum: 0})}
       onClick={() =>
         resolvedTheme === "dark" ? setTheme("light") : setTheme("dark")
       }
