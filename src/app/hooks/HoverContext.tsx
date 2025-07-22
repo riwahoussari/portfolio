@@ -3,8 +3,8 @@ import { createContext, useContext, useState, ReactNode } from "react";
 
 // Define types
 type HoverContextType = {
-  isHovering: { hover: string; videoNum: number };
-  setIsHovering: (hovering: { hover: string; videoNum: number }) => void;
+  isHovering: { hover: string };
+  setIsHovering: (hovering: { hover: string }) => void;
 };
 
 // Create context
@@ -14,7 +14,6 @@ const HoverContext = createContext<HoverContextType | undefined>(undefined);
 export const HoverProvider = ({ children }: { children: ReactNode }) => {
   const [isHovering, setIsHovering] = useState({
     hover: "none",
-    videoNum: 0,
   });
 
   return (

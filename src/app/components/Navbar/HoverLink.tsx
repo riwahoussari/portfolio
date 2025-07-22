@@ -12,10 +12,10 @@ export default function HoverLink({ children, ...props }: HoverLinkProps) {
   return (
     <Link
       onMouseLeave={() => {
-        setIsHovering({hover: "none", videoNum: 0});
+        setIsHovering({ hover: "none" });
       }}
       onMouseEnter={() => {
-        setIsHovering({hover: "normal", videoNum: 0});
+        setIsHovering({ hover: "normal" });
       }}
       {...props}
       className="group relative flex justify-center overflow-hidden lg:justify-start"

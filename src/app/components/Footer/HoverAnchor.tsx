@@ -23,11 +23,11 @@ export default function HoverAnchor({
   return (
     <a
       onMouseLeave={() => {
-        setIsHovering({hover: "none", videoNum: 0})
+        setIsHovering({hover: "none"})
         setLocalHover(false);
       }}
       onMouseEnter={() => {
-        setIsHovering({hover: "normal", videoNum: 0});
+        setIsHovering({hover: "normal"});
         setLocalHover(true);
       }}
       {...props}

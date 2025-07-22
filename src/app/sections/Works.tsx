@@ -228,7 +228,6 @@ export default function Works() {
   useEffect(() => {
     setIsHovering({
       hover: videoHover ? "video" : "none",
-      videoNum: videoHover,
     });
   }, [videoHover]);
 
@@ -276,7 +275,11 @@ export default function Works() {
                   loop
                 ></video>
               </motion.div>
-              <a target="_blank" href="https://arthyl-nextjs.vercel.app/" className="z-1 absolute flex h-dvh w-full items-stretch justify-center">
+              <a
+                target="_blank"
+                href="https://arthyl-nextjs.vercel.app/"
+                className="z-1 absolute flex h-dvh w-full items-stretch justify-center"
+              >
                 <video
                   ref={videoRef1}
                   src="/arthyl-screen-recording.mp4"
@@ -341,7 +344,11 @@ export default function Works() {
                   loop
                 ></video>
               </motion.div>
-              <a target="_blank" href="https://haifaabitar.com/" className="z-1 absolute flex h-dvh w-full items-stretch justify-center">
+              <a
+                target="_blank"
+                href="https://haifaabitar.com/"
+                className="z-1 absolute flex h-dvh w-full items-stretch justify-center"
+              >
                 <video
                   ref={videoRef2}
                   src="/haifaa-bitar-screen-recording.mp4"
