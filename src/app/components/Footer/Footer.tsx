@@ -31,11 +31,11 @@ export default function Footer() {
       <div className="relative h-[175vh] md:h-[150vh]">
         <div className="z-1 footer-y-padding sticky top-[100vh] flex h-[100vh] flex-col justify-between overflow-hidden">
           {/* top row */}
-          <div className="text-background side-padding flex justify-between max-lg:flex-col-reverse max-lg:items-center">
+          <div className="text-background items-start side-padding flex  justify-between max-lg:flex-col-reverse max-lg:items-center">
             {/* video of 3d 34 */}
             <video
               src={src}
-              className="w-[min(30vw,360px)] object-contain max-lg:my-12"
+              className="w-[min(30vw,360px)] object-contain max-lg:my-12 pt-12"
               autoPlay
               muted
               loop
