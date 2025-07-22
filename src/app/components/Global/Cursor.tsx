@@ -33,7 +33,7 @@ export default function Cursor() {
 
       {/* video hover cursor/link */}
       <motion.div
-        className="z-1000 scale-80 absolute flex items-center justify-between gap-4 rounded-2xl bg-white p-6 text-black opacity-0 mix-blend-difference lg:opacity-100 w-max"
+        className="z-1000 scale-80 absolute flex items-center justify-between gap-4 rounded-2xl bg-white p-6 text-black opacity-0 mix-blend-difference lg:opacity-100 w-max origin-top-left"
         animate={{
           top: y,
           left: x,
