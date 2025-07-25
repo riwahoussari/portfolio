@@ -103,7 +103,7 @@ export default function Services() {
   ];
 
   return (
-    <section id="services" ref={sectionRef} className="relative md:mt-[25vh]">
+    <section  ref={sectionRef} className="relative md:mt-[25vh]">
       <div className="sticky top-0 h-dvh">
         {/* gradient background */}
         <motion.div
@@ -217,7 +217,7 @@ export default function Services() {
         className="h-0 w-0 border hover:border-green-500 hover:border-orange-500 hover:border-pink-500 hover:border-purple-500 hover:border-blue-500 hover:border-yellow-500 hover:text-green-500 hover:text-orange-500 hover:text-pink-500 hover:text-purple-500 hover:text-blue-500 hover:text-yellow-500 opacity-0"
       ></div>
       {/* Services */}
-      <div className="z-2 relative ms-auto mt-[20vh] grid pb-[min(33vh,20vw)] max-lg:pb-[100vh] lg:w-2/3 xl:w-[60%] 2xl:w-1/2">
+      <div id="services" className="z-2 relative ms-auto pt-[20vh] grid pb-[min(33vh,20vw)] max-lg:pb-[100vh] lg:w-2/3 xl:w-[60%] 2xl:w-1/2">
         <div className="bg-background absolute left-0 right-0 top-0 h-dvh lg:hidden" />
 
         <motion.div

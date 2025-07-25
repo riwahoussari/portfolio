@@ -70,9 +70,13 @@ export default function Testimonials() {
   const fadeOutOpacity = useTransform(opacityScroll, [0, 0.5], [1, 0]);
 
   return (
-    <section id="testimonials" className="bg-background pt-[25vh] md:pt-[50vh]">
+    <section
+      
+      className="bg-background  pt-[25vh] md:pt-[50vh]"
+    >
       {/* title */}
       <motion.div
+      id="testimonials"
         style={{
           scaleY: titleDivScaleY,
           opacity: titleDivScaleY,

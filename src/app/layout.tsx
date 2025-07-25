@@ -2,10 +2,10 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import Navbar from "./components/Navbar/Navbar";
-import LenisScrollWrapper from "./components/Global/LenisScrollWrapper";
 import { ThemeProvider } from "next-themes";
 import Footer from "./components/Footer/Footer";
 import { HoverProvider } from "./hooks/HoverContext";
+import { LenisScrollWrapper } from "./components/Global/LenisScrollWrapper";
 
 export const neueMontreal = localFont({
   src: [

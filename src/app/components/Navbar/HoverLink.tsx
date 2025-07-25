@@ -1,16 +1,51 @@
 "use client";
 import { useHover } from "@/app/hooks/HoverContext";
-import Link from "next/link";
-import React from "react";
+// import Link from "next/link";
+import React, { AnchorHTMLAttributes } from "react";
+import { useLenis } from "../Global/LenisScrollWrapper";
 
 type HoverLinkProps = {
   children: string;
-} & React.ComponentProps<typeof Link>;
+  href: string;
+} & AnchorHTMLAttributes<HTMLAnchorElement>;
 
-export default function HoverLink({ children, ...props }: HoverLinkProps) {
+export default function HoverLink({
+  children,
+  href,
+  ...props
+}: HoverLinkProps) {
   const { setIsHovering } = useHover();
+
+  const lenis = useLenis();
+
+  const handleClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+
+    const target = document.querySelector(href);
+    if (!target) return;
+
+    const y =
+      href === "#contact"
+        ? document.body.clientHeight
+        : target.getBoundingClientRect().top + window.scrollY;
+
+    let duration =
+      Math.round((Math.abs(y - window.scrollY) / 1500) * 100) / 100;
+
+    if (lenis) {
+      console.log("lenis");
+
+      lenis.scrollTo(y, { immediate: false, duration: Math.min(duration, 3) });
+    } else {
+      console.log("NOT lenis");
+      window.scrollTo({ top: y, behavior: "smooth" });
+    }
+  };
+
   return (
-    <Link
+    <a
+      onClick={handleClick}
+      href={href}
       onMouseLeave={() => {
         setIsHovering({ hover: "none" });
       }}
@@ -32,7 +67,7 @@ export default function HoverLink({ children, ...props }: HoverLinkProps) {
       <span className="absolute top-full whitespace-pre" aria-hidden>
         {renderLetters(children, "in")}
       </span>
-    </Link>
+    </a>
   );
 }
 

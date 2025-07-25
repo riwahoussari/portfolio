@@ -1,23 +1,24 @@
 import { AnimatePresence, motion } from "motion/react";
 import { MouseEventHandler } from "react";
 import Link from "next/link";
+import { useLenis } from "../Global/LenisScrollWrapper";
 
 const LINKS = [
   {
     name: "Services",
-    link: "/services",
+    link: "#services",
   },
   {
     name: "Projects",
-    link: "/about",
+    link: "#projects",
   },
   {
     name: "Testimonials",
-    link: "/testimonials",
+    link: "#testimonials",
   },
   {
     name: "Contact",
-    link: "/contact",
+    link: "#contact",
   },
 ];
 
@@ -70,11 +71,39 @@ const menuSlide = {
 function MobileNavLink({
   index,
   onClick,
+  href,
   ...props
 }: {
+  href: string;
   index: number;
   onClick: MouseEventHandler<HTMLDivElement>;
 } & React.ComponentProps<typeof Link>) {
+
+  const lenis = useLenis();
+
+  const handleClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+
+    const target = document.querySelector(href);
+    if (!target) return;
+
+    const y =
+      href === "#contact"
+        ? document.body.clientHeight
+        : target.getBoundingClientRect().top + window.scrollY;
+
+    let duration =
+      Math.round((Math.abs(y - window.scrollY) / 1500) * 100) / 100;
+
+    if (lenis) {
+      console.log("lenis");
+      lenis.scrollTo(y, { immediate: false, duration: Math.min(duration, 3) });
+    } else {
+      console.log("NOT lenis");
+      window.scrollTo({ top: y, behavior: "smooth" });
+    }
+  };
+
   return (
     <motion.div
       custom={LINKS.length - index} // Pass custom value for staggered animation
@@ -83,13 +112,16 @@ function MobileNavLink({
       animate="enter"
       exit="exit"
       onClick={onClick}
+      className="cursor-pointer"
     >
-      <Link
+      <a
+        onClick={handleClick}
+        href={href}
         {...props}
-        className="text-foreground display-1 side-padding-15 flex h-[25vh] items-center text-[min(120px,15vw)]!"
+        className="text-foreground display-1 side-padding-15 text-[min(120px,15vw)]! flex h-[25vh] cursor-pointer items-center"
       >
         {props.children}
-      </Link>
+      </a>
     </motion.div>
   );
 }

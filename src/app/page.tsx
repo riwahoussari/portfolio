@@ -13,6 +13,7 @@ import { useHover } from "./hooks/HoverContext";
 import Navbar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer/Footer";
 import Cursor from "./components/Global/Cursor";
+import { useRef } from "react";
 
 const NoSSRInitialRevealAnim = dynamic(
   () => import("./components/Global/InitialRevealAnim"),
@@ -22,7 +23,6 @@ const NoSSRInitialRevealAnim = dynamic(
 );
 
 export default function Home() {
-
   return (
     <div className="relative w-full overflow-x-clip">
       {/* cursor */}
@@ -30,6 +30,7 @@ export default function Home() {
 
       <NoSSRInitialRevealAnim />
       <Navbar />
+
       <main>
         <Hero />
         <About />

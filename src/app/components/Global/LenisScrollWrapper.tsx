@@ -1,21 +1,33 @@
 "use client";
 
+import { createContext, useContext, useEffect, useState } from "react";
 import Lenis from "lenis";
-import { ReactNode, useEffect } from "react";
 
-export default function LenisScrollWrapper({
-  children,
-}: {
-  children: ReactNode;
-}) {
+const LenisContext = createContext<Lenis | null>(null);
+
+export const useLenis = () => useContext(LenisContext);
+
+export function LenisScrollWrapper({ children }: { children: React.ReactNode }) {
+  const [lenisInstance, setLenisInstance] = useState<Lenis | null>(null);
+
   useEffect(() => {
-    const lenis = new Lenis({duration: 4});
+    const lenis = new Lenis({ duration: 4 });
+    setLenisInstance(lenis);
+
     function raf(time: number) {
       lenis.raf(time);
       requestAnimationFrame(raf);
     }
     requestAnimationFrame(raf);
-  });
 
-  return <>{children}</>;
+    return () => {
+      lenis.destroy();
+    };
+  }, []);
+
+  return (
+    <LenisContext.Provider value={lenisInstance}>
+      {children}
+    </LenisContext.Provider>
+  );
 }

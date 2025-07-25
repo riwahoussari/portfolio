@@ -28,6 +28,7 @@
   --background: #fff;
   --foreground: #000;
   --accent: #fe1300;
+  scroll-behavior: smooth;
 }
 :root.dark {
   --background: #000;
@@ -44,6 +45,8 @@ body {
     -apple-system,
     sans-serif;
 }
+
+
 
 /* Gradient */
 .bg-accent-gradient {
