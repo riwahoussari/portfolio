@@ -7,13 +7,10 @@ import Works from "./sections/Works";
 import Testimonials from "./sections/Testimonials";
 
 import dynamic from "next/dynamic";
-import useMousePosition from "./hooks/useMousePosition";
-import { motion } from "motion/react";
-import { useHover } from "./hooks/HoverContext";
 import Navbar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer/Footer";
 import Cursor from "./components/Global/Cursor";
-import { useRef } from "react";
+import { useState } from "react";
 
 const NoSSRInitialRevealAnim = dynamic(
   () => import("./components/Global/InitialRevealAnim"),
@@ -23,23 +20,32 @@ const NoSSRInitialRevealAnim = dynamic(
 );
 
 export default function Home() {
+  const [mediaLoaded, setMediaLoaded] = useState([false, false, false]);
+  const [revealAnimEnded, setRevealAnimEnded] = useState(0);
+
   return (
     <div className="relative w-full overflow-x-clip">
-      {/* cursor */}
-      <Cursor />
+      {/* preloader */}
+      <NoSSRInitialRevealAnim
+        revealAnimEnded={revealAnimEnded}
+        setRevealAnimEnded={setRevealAnimEnded}
+        mediaLoaded={mediaLoaded}
+      />
 
-      <NoSSRInitialRevealAnim />
+      {/* cursor */}
+      <Cursor mediaLoaded={mediaLoaded} />
+
       <Navbar />
 
       <main>
-        <Hero />
+        <Hero revealAnimEnded={revealAnimEnded} />
         <About />
         <Adjectives />
         <Services />
-        <Works />
+        <Works setMediaLoaded={setMediaLoaded} />
         <Testimonials />
       </main>
-      <Footer />
+      <Footer setMediaLoaded={setMediaLoaded} />
     </div>
   );
 }

@@ -78,7 +78,6 @@ function MobileNavLink({
   index: number;
   onClick: MouseEventHandler<HTMLDivElement>;
 } & React.ComponentProps<typeof Link>) {
-
   const lenis = useLenis();
 
   const handleClick = (e: React.MouseEvent) => {
@@ -96,10 +95,8 @@ function MobileNavLink({
       Math.round((Math.abs(y - window.scrollY) / 1500) * 100) / 100;
 
     if (lenis) {
-      console.log("lenis");
       lenis.scrollTo(y, { immediate: false, duration: Math.min(duration, 3) });
     } else {
-      console.log("NOT lenis");
       window.scrollTo({ top: y, behavior: "smooth" });
     }
   };

@@ -69,6 +69,9 @@ export default function Navbar() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [mobileMenuOpen]);
 
+  // reduce other links opacity when one is hovered
+  const [localHover, setLocalHover] = useState(false);
+
   return (
     <motion.header
       className={
@@ -77,7 +80,9 @@ export default function Navbar() {
       }
       initial={{ y: "-100%", opacity: 0 }}
       animate={
-        hideNavOnScroll && !mobileMenuOpen ? { y: "-100%", opacity: 0 } : { y: "0%", opacity: 1 }
+        hideNavOnScroll && !mobileMenuOpen
+          ? { y: "-100%", opacity: 0 }
+          : { y: "0%", opacity: 1 }
       }
       transition={{
         ease: "easeInOut",
@@ -92,7 +97,7 @@ export default function Navbar() {
             key={i}
             className={"text-foreground " + (i !== 0 && " max-lg:hidden")}
           >
-            <HoverLink href={link.link} key={i}>
+            <HoverLink localHover={localHover} setLocalHover={setLocalHover} href={link.link} key={i}>
               {link.name}
             </HoverLink>
           </div>

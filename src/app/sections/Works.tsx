@@ -1,9 +1,20 @@
 "use client";
 import { useScroll, useTransform, motion, useMotionValue } from "motion/react";
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import {
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
 import { useHover } from "../hooks/HoverContext";
 
-export default function Works() {
+export default function Works({
+  setMediaLoaded,
+}: {
+  setMediaLoaded: Dispatch<SetStateAction<boolean[]>>;
+}) {
   ///////////////////////////// update video clip path inset based on aspect ratio
 
   const [vid1Inset, setVid1Inset] = useState("inset(50% 0% 50% 0%)");
@@ -231,6 +242,34 @@ export default function Works() {
     });
   }, [videoHover]);
 
+  //// preloader
+  useEffect(() => {
+    const video1 = videoRef1.current;
+    const video2 = videoRef2.current;
+    if (!video1 || !video2) return;
+
+    const handleCanPlay1 = () => {
+      console.log("arthyl loaded");
+      setMediaLoaded((prev) => [true, prev[1], prev[2]]);
+    };
+
+    const handleCanPlay2 = () => {
+      console.log("haifaa loaded");
+      setMediaLoaded((prev) => [prev[0], true, prev[2]]);
+    };
+
+    video1.addEventListener("canplaythrough", handleCanPlay1);
+    video2.addEventListener("canplaythrough", handleCanPlay2);
+
+    video1.load();
+    video2.load();
+
+    return () => {
+      video1.removeEventListener("canplaythrough", handleCanPlay1);
+      video2.removeEventListener("canplaythrough", handleCanPlay2);
+    };
+  }, []);
+
   return (
     <section id="projects" style={{ height: adjustedHeight }}>
       <div ref={sectionRef}>
@@ -278,7 +317,7 @@ export default function Works() {
               <a
                 target="_blank"
                 href="https://arthyl-nextjs.vercel.app/"
-                className="z-1 absolute flex h-dvh w-full items-stretch justify-center"
+                className="z-1 absolute flex h-dvh w-full items-stretch justify-center max-lg:pointer-events-none"
               >
                 <video
                   ref={videoRef1}
@@ -318,6 +357,28 @@ export default function Works() {
                 perspiciatis autem.
               </span>
             </p>
+            <div className="side-padding mt-8 lg:hidden">
+              <a
+                target="_blank"
+                href="https://arthyl-nextjs.vercel.app/"
+                className="flex w-max origin-top-left items-center justify-between gap-4 rounded-2xl bg-white px-8 py-5 text-black mix-blend-difference"
+              >
+                <p className="h4-regular">View Website</p>
+                <div className="flex w-6 -rotate-90 items-center justify-center">
+                  <svg
+                    viewBox="0 0 33 33"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M1 1L32 32M32 32V5.5M32 32H5.5"
+                      strokeWidth={2}
+                      className="stroke-black"
+                    />
+                  </svg>
+                </div>
+              </a>
+            </div>
           </div>
         </div>
 
@@ -347,7 +408,7 @@ export default function Works() {
               <a
                 target="_blank"
                 href="https://haifaabitar.com/"
-                className="z-1 absolute flex h-dvh w-full items-stretch justify-center"
+                className="z-1 absolute flex h-dvh w-full items-stretch justify-center max-lg:pointer-events-none"
               >
                 <video
                   ref={videoRef2}
@@ -387,6 +448,28 @@ export default function Works() {
                 perspiciatis autem.
               </span>
             </p>
+            <div className="side-padding mt-8 lg:hidden">
+              <a
+                target="_blank"
+                href="https://haifaabitar.com/"
+                className="flex w-max origin-top-left items-center justify-between gap-4 rounded-2xl bg-white px-8 py-5 text-black mix-blend-difference"
+              >
+                <p className="h4-regular">View Website</p>
+                <div className="flex w-6 -rotate-90 items-center justify-center">
+                  <svg
+                    viewBox="0 0 33 33"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M1 1L32 32M32 32V5.5M32 32H5.5"
+                      strokeWidth={2}
+                      className="stroke-black"
+                    />
+                  </svg>
+                </div>
+              </a>
+            </div>
           </div>
         </div>
       </div>

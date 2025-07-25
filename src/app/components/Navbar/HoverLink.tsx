@@ -1,17 +1,21 @@
 "use client";
 import { useHover } from "@/app/hooks/HoverContext";
 // import Link from "next/link";
-import React, { AnchorHTMLAttributes } from "react";
+import React, { AnchorHTMLAttributes, Dispatch, SetStateAction } from "react";
 import { useLenis } from "../Global/LenisScrollWrapper";
 
 type HoverLinkProps = {
   children: string;
   href: string;
+  localHover: boolean;
+  setLocalHover: Dispatch<SetStateAction<boolean>>
 } & AnchorHTMLAttributes<HTMLAnchorElement>;
 
 export default function HoverLink({
   children,
   href,
+  localHover,
+  setLocalHover,
   ...props
 }: HoverLinkProps) {
   const { setIsHovering } = useHover();
@@ -33,11 +37,8 @@ export default function HoverLink({
       Math.round((Math.abs(y - window.scrollY) / 1500) * 100) / 100;
 
     if (lenis) {
-      console.log("lenis");
-
       lenis.scrollTo(y, { immediate: false, duration: Math.min(duration, 3) });
     } else {
-      console.log("NOT lenis");
       window.scrollTo({ top: y, behavior: "smooth" });
     }
   };
@@ -48,12 +49,15 @@ export default function HoverLink({
       href={href}
       onMouseLeave={() => {
         setIsHovering({ hover: "none" });
+        setLocalHover(false)
       }}
       onMouseEnter={() => {
         setIsHovering({ hover: "normal" });
+        setLocalHover(true)
       }}
       {...props}
-      className="group relative flex justify-center overflow-hidden lg:justify-start"
+      className="group relative flex justify-center overflow-hidden lg:justify-start hover:opacity-100! duration-200 ease-in-out"
+      style={{opacity: localHover ? 0.2 : 1}}
     >
       {/* Invisible placeholder to maintain height */}
       <span className="whitespace-pre opacity-0">

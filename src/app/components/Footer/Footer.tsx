@@ -1,11 +1,22 @@
 "use client";
 import { useScroll, useTransform, motion } from "motion/react";
 import { useTheme } from "next-themes";
-import { useLayoutEffect, useRef, useState } from "react";
+import {
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
 import HoverAnchor from "./HoverAnchor";
 import FooterForm from "./Form";
 
-export default function Footer() {
+export default function Footer({
+  setMediaLoaded,
+}: {
+  setMediaLoaded: Dispatch<SetStateAction<boolean[]>>;
+}) {
   const { resolvedTheme } = useTheme();
   const [src, setSrc] = useState("/black.mp4");
 
@@ -23,6 +34,27 @@ export default function Footer() {
 
   const [localHover, setLocalHover] = useState(false);
 
+  //// preloader
+  const videoRef = useRef<HTMLVideoElement>(null);
+  useEffect(() => {
+    // vid 1
+    const video = videoRef.current;
+    if (!video) return;
+
+    const handleCanPlay = () => {
+      console.log('footer loaded')
+      setMediaLoaded((prev) => {
+        return [prev[0], prev[1], true];
+      });
+    };
+
+    video.addEventListener("canplaythrough", handleCanPlay);
+
+    return () => {
+      video.removeEventListener("canplaythrough", handleCanPlay);
+    };
+  }, []);
+
   return (
     <footer
       ref={footerRef}
@@ -34,6 +66,7 @@ export default function Footer() {
           <div className="text-background side-padding flex items-start justify-between max-lg:flex-col-reverse max-lg:items-center">
             {/* video of 3d 34 */}
             <video
+              ref={videoRef}
               src={src}
               className="w-[min(30vw,360px)] object-contain pt-12 max-lg:my-12"
               autoPlay

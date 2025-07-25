@@ -1,9 +1,8 @@
 import { useHover } from "@/app/hooks/HoverContext";
 import useMousePosition from "@/app/hooks/useMousePosition";
 import { motion } from "motion/react";
-import ArrowSvg from "../SVGs/ArrowSvg";
 
-export default function Cursor() {
+export default function Cursor({ mediaLoaded }: { mediaLoaded: boolean[] }) {
   const { x, y } = useMousePosition();
   const { isHovering } = useHover();
   return (
@@ -23,17 +22,16 @@ export default function Cursor() {
           backgroundColor:
             isHovering.hover === "normal" ? "#fd2c2a" : "#ffffff",
         }}
-        style={
-          isHovering.hover === "normal"
-            ? { mixBlendMode: "normal" }
-            : { mixBlendMode: "difference" }
-        }
+        style={{
+          mixBlendMode: isHovering.hover === "normal" ? "normal" : "difference",
+          visibility: mediaLoaded.every(Boolean) ? "visible" : "hidden",
+        }}
         transition={{ type: "tween", ease: "backOut", duration: 0.7 }}
       ></motion.div>
 
       {/* video hover cursor/link */}
       <motion.div
-        className="z-1000 scale-80 absolute flex items-center justify-between gap-4 rounded-2xl bg-white p-6 text-black opacity-0 mix-blend-difference lg:opacity-100 w-max origin-top-left"
+        className="z-10000 scale-80 absolute flex w-max origin-top-left items-center justify-between gap-4 rounded-2xl bg-white p-6 text-black opacity-0 mix-blend-difference lg:opacity-100"
         animate={{
           top: y,
           left: x,
@@ -41,6 +39,9 @@ export default function Cursor() {
           scale: isHovering.hover === "video" ? 1 : 0,
         }}
         transition={{ type: "tween", ease: "backOut", duration: 0.7 }}
+        style={{
+          visibility: mediaLoaded.every(Boolean) ? "visible" : "hidden",
+        }}
       >
         <p className="body-1">View Website</p>
         <div className="flex w-8 -rotate-90 items-center justify-center">
