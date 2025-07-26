@@ -2,7 +2,12 @@
 import { useEffect, useRef, useState } from "react";
 import BurgerMenuSvg from "./BurgerMenuSvg";
 import MobileNavMenu from "./MobileNavMenu";
-import { motion, useMotionValueEvent, useScroll } from "motion/react";
+import {
+  motion,
+  useMotionValueEvent,
+  useScroll,
+  useTransform,
+} from "motion/react";
 import HoverLink from "./HoverLink";
 
 const LINKS = [
@@ -75,14 +80,16 @@ export default function Navbar() {
   return (
     <motion.header
       className={
-        "z-100 side-padding sticky top-0 flex w-full items-center justify-between bg-transparent py-6 " +
-        (mobileMenuOpen ? " sm:backdrop-blur-md" : " backdrop-blur-md")
+        "z-100 side-padding sticky top-0 flex w-full items-center justify-between bg-transparent py-6 text-white lg:mix-blend-difference " +
+        (mobileMenuOpen
+          ? " "
+          : " mix-blend-difference")
       }
-      initial={{ y: "-100%", opacity: 0 }}
+      initial={{ opacity: 0, y: "-100%" }}
       animate={
         hideNavOnScroll && !mobileMenuOpen
-          ? { y: "-100%", opacity: 0 }
-          : { y: "0%", opacity: 1 }
+          ? { opacity: 0, y: "-100%" }
+          : { opacity: 1, y: "0%" }
       }
       transition={{
         ease: "easeInOut",
@@ -91,13 +98,18 @@ export default function Navbar() {
       }}
     >
       {/* Big Screen Navigation Links */}
-      <nav className="navlink flex w-full items-center justify-between backdrop-blur-md">
+      <nav className="navlink flex w-full items-center justify-between">
         {LINKS.map((link, i) => (
           <div
             key={i}
-            className={"text-foreground " + (i !== 0 && " max-lg:hidden")}
+            className={"text-white " + (i !== 0 && " max-lg:hidden")}
           >
-            <HoverLink localHover={localHover} setLocalHover={setLocalHover} href={link.link} key={i}>
+            <HoverLink
+              localHover={localHover}
+              setLocalHover={setLocalHover}
+              href={link.link}
+              key={i}
+            >
               {link.name}
             </HoverLink>
           </div>

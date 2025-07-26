@@ -11,6 +11,7 @@ import Navbar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer/Footer";
 import Cursor from "./components/Global/Cursor";
 import { useState } from "react";
+import ProgressBar from "./components/Global/ProgressBar";
 
 const NoSSRInitialRevealAnim = dynamic(
   () => import("./components/Global/InitialRevealAnim"),
@@ -34,6 +35,7 @@ export default function Home() {
 
       {/* cursor */}
       <Cursor mediaLoaded={mediaLoaded} />
+      <ProgressBar />
 
       <Navbar />
 
@@ -49,3 +51,4 @@ export default function Home() {
     </div>
   );
 }
+

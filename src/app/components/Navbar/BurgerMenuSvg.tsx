@@ -14,7 +14,7 @@ export default function BurgerMenuSvg({ isOpen }: { isOpen: boolean }) {
           id="top-line"
           opacity={1}
           d="M27 2H1"
-          stroke="var(--color-foreground)"
+          stroke="white"
           strokeWidth={2}
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -29,7 +29,7 @@ export default function BurgerMenuSvg({ isOpen }: { isOpen: boolean }) {
           id="bottom-line"
           opacity={1}
           d="M27 21H1"
-          stroke="var(--color-foreground)"
+          stroke="white"
           strokeWidth={2}
           strokeLinecap="round"
           strokeLinejoin="round"
