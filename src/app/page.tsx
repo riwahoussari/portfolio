@@ -31,22 +31,21 @@ export default function Home() {
         setRevealAnimEnded={setRevealAnimEnded}
       />
 
-      {/* cursor */}
-      <Cursor revealAnimEnded={revealAnimEnded} />
-      <ProgressBar />
+      <div style={{ visibility: revealAnimEnded >= 1 ? "visible" : "hidden" }}>
+        <Cursor revealAnimEnded={revealAnimEnded} />
+        <ProgressBar />
 
-      <Navbar />
-
-      <main>
-        <Hero revealAnimEnded={revealAnimEnded} />
-        <About />
-        <Adjectives />
-        <Services />
-        <Works />
-        <Testimonials />
-      </main>
-      <Footer />
+        <Navbar />
+        <main>
+          <Hero revealAnimEnded={revealAnimEnded} />
+          <About />
+          <Adjectives />
+          <Services />
+          <Works />
+          <Testimonials />
+        </main>
+        <Footer />
+      </div>
     </div>
   );
 }
-
