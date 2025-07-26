@@ -2,7 +2,11 @@ import { useHover } from "@/app/hooks/HoverContext";
 import useMousePosition from "@/app/hooks/useMousePosition";
 import { motion } from "motion/react";
 
-export default function Cursor({ mediaLoaded }: { mediaLoaded: boolean[] }) {
+export default function Cursor({
+  revealAnimEnded,
+}: {
+  revealAnimEnded: number;
+}) {
   const { x, y } = useMousePosition();
   const { isHovering } = useHover();
   return (
@@ -24,7 +28,7 @@ export default function Cursor({ mediaLoaded }: { mediaLoaded: boolean[] }) {
         }}
         style={{
           mixBlendMode: isHovering.hover === "normal" ? "normal" : "difference",
-          visibility: mediaLoaded.every(Boolean) ? "visible" : "hidden",
+          visibility: revealAnimEnded ? "visible" : "hidden",
         }}
         transition={{ type: "tween", ease: "backOut", duration: 0.7 }}
       ></motion.div>
@@ -40,7 +44,7 @@ export default function Cursor({ mediaLoaded }: { mediaLoaded: boolean[] }) {
         }}
         transition={{ type: "tween", ease: "backOut", duration: 0.7 }}
         style={{
-          visibility: mediaLoaded.every(Boolean) ? "visible" : "hidden",
+          visibility: revealAnimEnded ? "visible" : "hidden",
         }}
       >
         <p className="body-1">View Website</p>

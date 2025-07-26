@@ -9,12 +9,11 @@ import {
   useState,
 } from "react";
 import { useHover } from "../hooks/HoverContext";
+import Image from "next/image";
+import arthylBanner from "../../../public/arthyl-banner.png";
+import haifaaBanner from "../../../public/haifaa-banner.png";
 
-export default function Works({
-  setMediaLoaded,
-}: {
-  setMediaLoaded: Dispatch<SetStateAction<boolean[]>>;
-}) {
+export default function Works() {
   ///////////////////////////// update video clip path inset based on aspect ratio
 
   const [vid1Inset, setVid1Inset] = useState("inset(50% 0% 50% 0%)");
@@ -242,18 +241,20 @@ export default function Works({
     });
   }, [videoHover]);
 
-  //// preloader
+  //// loading images
+  const [vid1Loaded, setVid1Loaded] = useState(false);
+  const [vid2Loaded, setVid2Loaded] = useState(false);
   useEffect(() => {
     const video1 = videoRef1.current;
     const video2 = videoRef2.current;
     if (!video1 || !video2) return;
 
     const handleCanPlay1 = () => {
-      setMediaLoaded((prev) => [true, prev[1]]);
+      setVid1Loaded(true);
     };
 
     const handleCanPlay2 = () => {
-      setMediaLoaded((prev) => [prev[0], true]);
+      setVid2Loaded(true);
     };
 
     video1.addEventListener("canplaythrough", handleCanPlay1);
@@ -295,31 +296,48 @@ export default function Works({
           className="z-1 bg-background relative h-[500vh] -translate-y-[200vh] sm:h-[600vh] lg:h-[min(700vh,750vw)]"
           style={{ clipPath: "inset(0 0 100vh 0)" }}
         >
+          {/* videos */}
           <motion.div
             style={{ scale: finalScale1 }}
             className="sticky top-[200vh] w-full overflow-hidden"
           >
             <div className="z-1 relative h-dvh w-full">
+              {/* preloading image */}
+              {!vid1Loaded && (
+                <div className="z-1 absolute min-h-dvh min-w-full object-cover">
+                  <Image
+                    src={arthylBanner}
+                    placeholder="blur"
+                    alt="screenshot of Arthyl's website"
+                    className="brightness-65 min-h-dvh min-w-full object-cover blur-md"
+                  />
+                  <p className="body-1 -translate-1/2 absolute left-1/2 top-1/2 text-center text-white">
+                    <AnimatedLoading />
+                  </p>
+                </div>
+              )}
+              {/* blurred bg video */}
               <motion.div
                 style={{ clipPath: finalClipPath1 }}
-                className="z-1 absolute min-h-dvh min-w-full object-cover blur-lg brightness-75"
+                className="z-2 absolute min-h-dvh min-w-full object-cover blur-lg brightness-75"
               >
                 <video
-                  src="/arthyl-screen-recording.mp4"
+                  src="/arthyl-1080.mp4"
                   className="min-h-dvh min-w-full object-cover"
                   autoPlay
                   muted
                   loop
                 ></video>
               </motion.div>
+              {/* video */}
               <a
                 target="_blank"
                 href="https://arthyl-nextjs.vercel.app/"
-                className="z-1 absolute flex h-dvh w-full items-stretch justify-center max-lg:pointer-events-none"
+                className="z-2 absolute flex h-dvh w-full items-stretch justify-center max-lg:pointer-events-none"
               >
                 <video
                   ref={videoRef1}
-                  src="/arthyl-screen-recording.mp4"
+                  src="/arthyl-1080.mp4"
                   className="max-h-dvh cursor-pointer object-contain"
                   autoPlay
                   muted
@@ -340,6 +358,7 @@ export default function Works({
             </div>
           </motion.div>
 
+          {/* text */}
           <div className="relative z-10 translate-y-[100vh] text-white mix-blend-difference sm:translate-y-[150vh] lg:translate-y-[min(200vh,200vw)]">
             <h2 className="display-1 text-[max(64px,10.41vw)]! max-xs:text-[12vw]! side-padding mb-[50vh] text-right md:mb-[min(60vh,60vw)] xl:mb-[min(80vh,80vw)]">
               ARTHYL.COM
@@ -388,23 +407,40 @@ export default function Works({
           className="bg-background relative z-0 h-[500vh] -translate-y-[400vh] sm:h-[600vh] lg:h-[min(700vh,750vw)]"
           style={{ clipPath: "inset(0 0 100vh 0)" }}
         >
+          {/* videos */}
           <motion.div
             style={{ scale: finalScale2 }}
             className="sticky top-[400vh] w-full overflow-hidden"
           >
             <div className="z-1 relative h-dvh w-full">
+              {/* preloading image */}
+              {!vid2Loaded && (
+                <div className="z-1 absolute min-h-dvh min-w-full object-cover">
+                  <Image
+                    src={haifaaBanner}
+                    placeholder="blur"
+                    alt="screenshot of Haifaa's website"
+                    className="brightness-65 min-h-dvh min-w-full object-cover blur-md"
+                  />
+                  <p className="body-1 -translate-1/2 absolute left-1/2 top-1/2 text-center text-white">
+                    <AnimatedLoading />
+                  </p>
+                </div>
+              )}
+              {/* blurred bg video */}
               <motion.div
                 style={{ clipPath: finalClipPath2 }}
                 className="z-1 absolute min-h-dvh min-w-full object-cover blur-lg brightness-75"
               >
                 <video
-                  src="/haifaa-bitar-screen-recording.mp4"
+                  src="/haifaa-1080.mp4"
                   className="min-h-dvh min-w-full object-cover"
                   autoPlay
                   muted
                   loop
                 ></video>
               </motion.div>
+              {/* video */}
               <a
                 target="_blank"
                 href="https://haifaabitar.com/"
@@ -412,7 +448,7 @@ export default function Works({
               >
                 <video
                   ref={videoRef2}
-                  src="/haifaa-bitar-screen-recording.mp4"
+                  src="/haifaa-1080.mp4"
                   className="max-h-dvh cursor-pointer object-contain"
                   autoPlay
                   muted
@@ -433,6 +469,7 @@ export default function Works({
             </div>
           </motion.div>
 
+          {/* text */}
           <div className="relative z-10 translate-y-[100vh] text-white mix-blend-difference sm:translate-y-[150vh] lg:translate-y-[min(200vh,200vw)]">
             <h2 className="display-1 text-[max(52px,9vw)]! max-xs:text-[10vw]! side-padding mb-[50vh] text-right md:mb-[min(60vh,60vw)] xl:mb-[min(80vh,80vw)]">
               HAIFAABITAR.COM
@@ -476,5 +513,58 @@ export default function Works({
         </div>
       </div>
     </section>
+  );
+}
+
+function AnimatedLoading() {
+  return (
+    <span>
+      loading
+      <motion.span
+        animate={{
+          display: ["inline", "none", "none"],
+        }}
+        transition={{
+          repeat: Infinity,
+          duration: 3,
+          ease: "linear",
+          times: [0, 0.5, 1],
+          delay: 0,
+        }}
+        className="inline-block"
+      >
+        .
+      </motion.span>
+      <motion.span
+        animate={{
+          display: ["inline", "none", "none"],
+        }}
+        transition={{
+          repeat: Infinity,
+          duration: 3,
+          ease: "linear",
+          times: [0, 0.5, 1],
+          delay: 0.5,
+        }}
+        className="inline-block"
+      >
+        .
+      </motion.span>
+      <motion.span
+        animate={{
+          display: ["inline", "none", "none"],
+        }}
+        transition={{
+          repeat: Infinity,
+          duration: 3,
+          ease: "linear",
+          times: [0, 0.5, 1],
+          delay: 1,
+        }}
+        className="inline-block"
+      >
+        .
+      </motion.span>
+    </span>
   );
 }

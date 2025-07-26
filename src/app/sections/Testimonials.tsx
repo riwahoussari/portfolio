@@ -82,7 +82,7 @@ export default function Testimonials() {
             <QuotationsSvg />
           </div>
           <p className="h2-medium mb-11 mt-20 max-w-[1000px] text-center">
-            It's otherwordly, I love it! And the feedback I'm getting is 🔥.
+            It's otherwordly, I love it! And the feedback I'm getting is🔥.
             Thank you so so much, you raised me to a whole new level.
           </p>
 

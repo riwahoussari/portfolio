@@ -21,7 +21,6 @@ const NoSSRInitialRevealAnim = dynamic(
 );
 
 export default function Home() {
-  const [mediaLoaded, setMediaLoaded] = useState([false, false]);
   const [revealAnimEnded, setRevealAnimEnded] = useState(0);
 
   return (
@@ -30,11 +29,10 @@ export default function Home() {
       <NoSSRInitialRevealAnim
         revealAnimEnded={revealAnimEnded}
         setRevealAnimEnded={setRevealAnimEnded}
-        mediaLoaded={mediaLoaded}
       />
 
       {/* cursor */}
-      <Cursor mediaLoaded={mediaLoaded} />
+      <Cursor revealAnimEnded={revealAnimEnded} />
       <ProgressBar />
 
       <Navbar />
@@ -44,7 +42,7 @@ export default function Home() {
         <About />
         <Adjectives />
         <Services />
-        <Works setMediaLoaded={setMediaLoaded} />
+        <Works />
         <Testimonials />
       </main>
       <Footer />

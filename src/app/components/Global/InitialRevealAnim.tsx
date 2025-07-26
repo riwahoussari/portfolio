@@ -4,11 +4,9 @@ import { Dispatch, SetStateAction, useState } from "react";
 import { motion } from "motion/react";
 
 export default function InitialRevealAnim({
-  mediaLoaded,
   revealAnimEnded,
   setRevealAnimEnded,
 }: {
-  mediaLoaded: boolean[];
   revealAnimEnded: number;
   setRevealAnimEnded: Dispatch<SetStateAction<number>>;
 }) {
@@ -28,7 +26,7 @@ export default function InitialRevealAnim({
             clipPath: `path("M0 0 L0 ${vh + 0.3 * vw} Q${vw / 2} ${vh - 0.1 * vw} ${vw} ${vh + 0.3 * vw} L${vw} 0 Z")`,
           }}
           animate={
-            mediaLoaded.every(Boolean) && introAnimEnded
+            introAnimEnded
               ? {
                   clipPath: `path("M0 0 L0 0 Q${vw / 2} 0 ${vw} 0 L${vw} 0 Z")`,
                 }
@@ -98,66 +96,6 @@ export default function InitialRevealAnim({
               className="origin-top whitespace-pre"
             >
               DEVELOPER
-            </motion.span>
-          </p>
-          {/* LOADING... */}
-          <p className="display-1 -translate-1/2 absolute left-1/2 top-1/2 flex select-none flex-col font-semibold">
-            <motion.span
-              initial={{ scale: 0 }}
-              animate={{ scale: mediaLoaded.every(Boolean) ? 0 : 0.75 }}
-              transition={{
-                duration: 1.5,
-                ease: "easeInOut",
-                delay: 3.25,
-              }}
-              className="origin-center"
-            >
-              LOADING
-              <motion.span
-                animate={{
-                  display: ["inline", "none", "none"],
-                }}
-                transition={{
-                  repeat: Infinity,
-                  duration: 3,
-                  ease: "linear",
-                  times: [0, 0.5, 1],
-                  delay: 0,
-                }}
-                className="inline-block"
-              >
-                .
-              </motion.span>
-              <motion.span
-                animate={{
-                  display: ["inline", "none", "none"],
-                }}
-                transition={{
-                  repeat: Infinity,
-                  duration: 3,
-                  ease: "linear",
-                  times: [0, 0.5, 1],
-                  delay: 0.5,
-                }}
-                className="inline-block"
-              >
-                .
-              </motion.span>
-              <motion.span
-                animate={{
-                  display: ["inline", "none", "none"],
-                }}
-                transition={{
-                  repeat: Infinity,
-                  duration: 3,
-                  ease: "linear",
-                  times: [0, 0.5, 1],
-                  delay: 1,
-                }}
-                className="inline-block"
-              >
-                .
-              </motion.span>
             </motion.span>
           </p>
         </motion.div>
