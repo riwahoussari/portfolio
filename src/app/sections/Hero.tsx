@@ -117,7 +117,7 @@ export default function Hero({ revealAnimEnded }: { revealAnimEnded: number }) {
 
           <div className="relative mt-32 w-full overflow-hidden md:mt-16">
             <motion.div
-              className="absolute overflow-y-hidden whitespace-pre text-white mix-blend-difference"
+              className="absolute z-1 overflow-y-hidden whitespace-pre text-white mix-blend-difference"
               animate={marqueeControls}
               variants={marqueeVariants}
             >
@@ -179,7 +179,7 @@ export default function Hero({ revealAnimEnded }: { revealAnimEnded: number }) {
             </h1>
           </div>
 
-          <div className="grid-system -z-1 absolute bottom-0 w-full overflow-hidden max-md:translate-y-3/4 max-md:justify-items-end md:bottom-10">
+          <div className="grid-system z-0 absolute bottom-0 w-full overflow-hidden max-md:translate-y-3/4 max-md:justify-items-end md:bottom-10">
             <motion.div
               initial={{ clipPath: "inset(0 0 100% 0)" }}
               animate={
@@ -188,7 +188,7 @@ export default function Hero({ revealAnimEnded }: { revealAnimEnded: number }) {
                   : { clipPath: "inset(0 0 100% 0)" }
               }
               transition={{ duration: 0.8, ease: "easeInOut", delay: 0.2 }}
-              className="max-md:aspect-5/6 relative col-span-4 bg-green-300 max-md:max-w-[380px] max-md:translate-x-1/4 md:col-start-5 xl:col-start-9"
+              className="max-md:aspect-5/6 relative col-span-4 max-md:max-w-[380px] max-md:translate-x-1/4 md:col-start-5 xl:col-start-9"
             >
               <Image
                 alt="Image of Riwa Houssari Playing Basketball."
