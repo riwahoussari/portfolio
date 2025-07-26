@@ -36,7 +36,7 @@
   --accent: #fe1300;
 }
 
-body {
+html, body {
   background: var(--background);
   color: var(--foreground);
   font-family:

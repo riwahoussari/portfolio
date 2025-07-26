@@ -7,11 +7,15 @@ const LenisContext = createContext<Lenis | null>(null);
 
 export const useLenis = () => useContext(LenisContext);
 
-export function LenisScrollWrapper({ children }: { children: React.ReactNode }) {
+export function LenisScrollWrapper({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const [lenisInstance, setLenisInstance] = useState<Lenis | null>(null);
 
   useEffect(() => {
-    const lenis = new Lenis({ duration: 4 });
+    const lenis = new Lenis({ duration: 4, syncTouch: true, touchMultiplier: 4, gestureOrientation: "vertical" });
     setLenisInstance(lenis);
 
     function raf(time: number) {
