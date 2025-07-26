@@ -1,13 +1,6 @@
 "use client";
 import { useScroll, useTransform, motion, useMotionValue } from "motion/react";
-import {
-  Dispatch,
-  SetStateAction,
-  useEffect,
-  useLayoutEffect,
-  useRef,
-  useState,
-} from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useHover } from "../hooks/HoverContext";
 import Image from "next/image";
 import arthylBanner from "../../../public/arthyl-banner.png";
@@ -327,6 +320,7 @@ export default function Works() {
                   autoPlay
                   muted
                   loop
+                  style={{ opacity: vid1Loaded ? 1 : 0 }}
                 ></video>
               </motion.div>
               {/* video */}
@@ -340,6 +334,7 @@ export default function Works() {
                   src="/arthyl-1080.mp4"
                   className="max-h-dvh cursor-pointer object-contain"
                   autoPlay
+                  style={{ opacity: vid1Loaded ? 1 : 0 }}
                   muted
                   loop
                   onMouseEnter={() => {
@@ -436,6 +431,7 @@ export default function Works() {
                   src="/haifaa-1080.mp4"
                   className="min-h-dvh min-w-full object-cover"
                   autoPlay
+                  style={{ opacity: vid2Loaded ? 1 : 0 }}
                   muted
                   loop
                 ></video>
@@ -451,6 +447,7 @@ export default function Works() {
                   src="/haifaa-1080.mp4"
                   className="max-h-dvh cursor-pointer object-contain"
                   autoPlay
+                  style={{ opacity: vid2Loaded ? 1 : 0 }}
                   muted
                   loop
                   onMouseEnter={() => {
