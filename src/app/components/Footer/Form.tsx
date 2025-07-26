@@ -37,7 +37,7 @@ export default function FooterForm() {
     <form
       action="https://formsubmit.co/houssaririwa@gmail.com"
       method="POST"
-      className="body-3 flex w-[min(90vw,500px)] flex-col gap-10 pt-12 xl:w-[min(50vw,600px)]"
+      className="body-3 flex w-[min(90vw,500px)] flex-col gap-8 sm:gap-10 pt-12 xl:w-[min(50vw,600px)]"
     >
       <div className="flex items-center justify-between">
         <h2 className="h2-medium">Let's Talk</h2>
@@ -51,7 +51,7 @@ export default function FooterForm() {
           </div>
         </button>
       </div>
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-2 sm:gap-4">
         {/* full name */}
         <div>
           <input
@@ -77,7 +77,7 @@ export default function FooterForm() {
             }}
           />
           <p
-            className="instruction ps-8 pt-2 text-sm opacity-0 duration-200 ease-in-out"
+            className="instruction ps-8 pt-1 text-sm opacity-0 duration-200 ease-in-out sm:pt-2"
             style={{
               visibility: errors.includes("fullname") ? "visible" : "hidden",
             }}
@@ -111,7 +111,7 @@ export default function FooterForm() {
             />
           </div>
           <p
-            className="instruction ps-8 pt-2 text-sm opacity-0 duration-200 ease-in-out"
+            className="instruction ps-8 pt-1 text-sm opacity-0 duration-200 ease-in-out sm:pt-2"
             style={{
               visibility: errors.includes("phone") ? "visible" : "hidden",
             }}
@@ -146,7 +146,7 @@ export default function FooterForm() {
             }}
           ></textarea>
           <p
-            className="instruction ps-8 pt-2 text-sm opacity-0 duration-200 ease-in-out"
+            className="instruction ps-8 pt-1 text-sm opacity-0 duration-200 ease-in-out sm:pt-2"
             style={{
               visibility: errors.includes("message") ? "visible" : "hidden",
             }}
