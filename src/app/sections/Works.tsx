@@ -249,13 +249,11 @@ export default function Works({
     if (!video1 || !video2) return;
 
     const handleCanPlay1 = () => {
-      console.log("arthyl loaded");
-      setMediaLoaded((prev) => [true, prev[1], prev[2]]);
+      setMediaLoaded((prev) => [true, prev[1]]);
     };
 
     const handleCanPlay2 = () => {
-      console.log("haifaa loaded");
-      setMediaLoaded((prev) => [prev[0], true, prev[2]]);
+      setMediaLoaded((prev) => [prev[0], true]);
     };
 
     video1.addEventListener("canplaythrough", handleCanPlay1);

@@ -20,7 +20,7 @@ const NoSSRInitialRevealAnim = dynamic(
 );
 
 export default function Home() {
-  const [mediaLoaded, setMediaLoaded] = useState([false, false, false]);
+  const [mediaLoaded, setMediaLoaded] = useState([false, false]);
   const [revealAnimEnded, setRevealAnimEnded] = useState(0);
 
   return (
@@ -45,7 +45,7 @@ export default function Home() {
         <Works setMediaLoaded={setMediaLoaded} />
         <Testimonials />
       </main>
-      <Footer setMediaLoaded={setMediaLoaded} />
+      <Footer />
     </div>
   );
 }

@@ -138,7 +138,7 @@ export default function FooterForm() {
             id="message"
             placeholder="Your Message"
             rows={4}
-            className="border-background rounded-4xl footer-input w-full cursor-pointer resize-none border-2 px-8 py-6 outline-0 duration-200 ease-in-out hover:scale-105 focus:scale-105"
+            className="border-background bg-foreground rounded-4xl footer-input w-full cursor-pointer resize-none border-2 px-8 py-6 outline-0 duration-200 ease-in-out hover:scale-105 focus:scale-105"
             style={{
               borderColor: errors.includes("message")
                 ? "var(--color-background)"
