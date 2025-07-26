@@ -9,17 +9,31 @@ import {
 } from "motion/react";
 import { useRef, useState } from "react";
 
+const getAge = () => {
+  const birthDate = new Date("2007-09-17");
+  const today = new Date();
+  let age = today.getFullYear() - birthDate.getFullYear();
+  const hasHadBirthdayThisYear =
+    today.getMonth() > birthDate.getMonth() ||
+    (today.getMonth() === birthDate.getMonth() &&
+      today.getDate() >= birthDate.getDate());
+
+  if (!hasHadBirthdayThisYear) age--;
+
+  return age;
+};
+
+const words =
+  `I'm Riwa — a ${getAge()}-years-young web designer and full-stack developer from Lebanon. I'm the new kid on the block, but my work and skills already speak for themselves. I fell in love with coding the moment I realized I could bring ideas to life with just a keyboard and some caffeine. What started as curiosity quickly became obsession — and now, I spend most of my time building clean interfaces and stressing over pixels most people will never notice (- ‿◦ )`.split(
+    " "
+  );
+
 export default function About() {
   const sectionRef = useRef(null);
   const { scrollYProgress: sectionSroll } = useScroll({
     target: sectionRef,
     offset: ["start 0.85", "start 0.15"],
   });
-
-  const words =
-    "Studio Move in Montréal blends top creative talent with motion and design to craft impactful visuals and experiences. We merge diverse disciplines through a minimalist approach, focusing on creating bold and innovative work. We merge diverse disciplines through a minimalist approach, focusing on creating bold and innovative work.".split(
-      " "
-    );
 
   const isSectionInView = useInView(sectionRef, {
     once: true,
@@ -51,19 +65,25 @@ export default function About() {
           ))}
         </span>
       </h2>
-      <p className="h2-regular col-span-4 flex flex-wrap md:col-span-6 md:col-start-3 xl:col-span-8 xl:col-start-5">
+      <p className="h2-regular col-span-4 flex flex-wrap whitespace-pre md:col-span-6 md:col-start-3 xl:col-span-8 xl:col-start-5">
         {words.map((word, i) => (
-          <Word
-            index={i}
-            key={i}
-            start={i / words.length}
-            end={(i + 1) / words.length}
-            scrollProgress={sectionSroll}
-            transitionComplete={transitionComplete}
-          >
-            {word + " "}
-          </Word>
+          <>
+            <Word
+              index={i}
+              key={i}
+              start={i / words.length}
+              end={(i + 1) / words.length}
+              scrollProgress={sectionSroll}
+              transitionComplete={transitionComplete}
+            >
+              {word}
+            </Word>
+            <span key={`space-${i}`} className="whitespace-pre">
+              {" "}
+            </span>
+          </>
         ))}
+        {/* <span className="whitespace-nowrap"> </span> */}
       </p>
     </section>
   );
@@ -94,10 +114,14 @@ function Word({
       ref={spanRef}
       initial={{ opacity: transitionComplete ? 1 : 0.0 }}
       animate={{ opacity: transitionComplete ? 1 : isInView ? 1 : 0.0 }}
-      transition={{ duration: 0.4, ease: "easeInOut", delay: 0.15 + index * 0.015 }}
-      className="whitespace-pre"
+      transition={{
+        duration: 0.4,
+        ease: "easeInOut",
+        delay: 0.15 + index * 0.015,
+      }}
+      className="whitespace-nowrap"
     >
-      {children}{" "}
+      {children}
     </motion.span>
   );
 }

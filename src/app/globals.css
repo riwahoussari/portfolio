@@ -58,6 +58,10 @@ html, body {
   color: transparent !important;
   -webkit-text-stroke-color: var(--foreground);
   -webkit-text-stroke-width: 3px;
+}.text-outline-white {
+  color: transparent !important;
+  -webkit-text-stroke-color: white;
+  -webkit-text-stroke-width: clamp(1px,0.25vw,3px);
 }
 @media (max-width: 640px) {
   .text-outline {

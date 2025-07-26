@@ -6,7 +6,7 @@ import FooterForm from "./Form";
 
 export default function Footer() {
   const { resolvedTheme } = useTheme();
-  const [src, setSrc] = useState("/black.mp4");
+  const [src, setSrc] = useState("/black-720.mp4");
 
   useLayoutEffect(() => {
     setSrc(resolvedTheme === "dark" ? "white-720.mp4" : "black-720.mp4");

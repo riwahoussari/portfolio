@@ -63,7 +63,7 @@ export default function Hero({ revealAnimEnded }: { revealAnimEnded: number }) {
         <div className="mt-14 w-full max-md:relative md:mt-32 xl:mt-40">
           <div className="grid-system">
             <p className="body-3 spaced col-span-4 text-justify xl:col-start-5">
-              {"Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi. Aliquam in hendrerit urna. Pellentesque sit amet sapien fringilla, mattis ligula consectetur, ultrices mauris."
+              {"I design clean, modern and smooth web interfaces then code them into reality — always leveling up, one project and one late-night bug fix at a time."
                 .split(" ")
                 .map((word, i) => (
                   <span key={i} className="inline-block overflow-y-hidden">
@@ -226,3 +226,7 @@ export default function Hero({ revealAnimEnded }: { revealAnimEnded: number }) {
     </>
   );
 }
+
+
+
+

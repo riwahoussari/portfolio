@@ -82,12 +82,12 @@ export default function Testimonials() {
             <QuotationsSvg />
           </div>
           <p className="h2-medium mb-11 mt-20 max-w-[1000px] text-center">
-            Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa
-            mi.
+            It's otherwordly, I love it! And the feedback I'm getting is 🔥.
+            Thank you so so much, you raised me to a whole new level.
           </p>
 
           <p className="text-[max(16px,1.5vw)]! max-2xs:text-[14px]! text-center font-light opacity-70 md:max-w-[70vw]">
-            @haifaa_bitar
+            @mario_abboud
           </p>
         </motion.div>
       </div>
@@ -102,13 +102,11 @@ export default function Testimonials() {
             <QuotationsSvg />
           </div>
           <p className="h2-medium mb-11 mt-20 max-w-[1000px] text-center">
-            Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa
-            mi. Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et
-            massa mi.
+            I love the new website. Thank you for your patience, your eye for detail, and for always offering multiple design options to choose from — it made the whole process easy and enjoyable
           </p>
 
           <p className="text-[max(16px,1.5vw)]! max-2xs:text-[14px]! text-center font-light opacity-70 md:max-w-[70vw]">
-            @arthyl
+            @haifaa_bitar
           </p>
         </motion.div>
       </div>

@@ -346,13 +346,15 @@ export default function Works({
             </h2>
             <p className="grid-system text-[max(16px,1.6vw)]!">
               <span className="col-span-4 max-md:max-w-[485px] md:min-w-[485px] xl:col-span-5">
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nobis
-                repellendus voluptatem voluptates excepturi nam. Impedit
-                reprehenderit modi totam delectus, ut a eum tempora quam omnis,
-                maiores vero molestiae labore, consequatur assumenda accusamus
-                blanditiis cum. Dolor tempora ducimus impedit nesciunt quod
-                similique magni sapiente sint! Nisi fugit provident iste
-                perspiciatis autem.
+                Arthyl is the first plexiglass artist in the Middle East, but
+                his old basic website didn’t reflect the artistry or uniqueness
+                of his work. This was a personal project where I redesigned and
+                rebuilt the entire site to match the bold, experimental nature
+                of his art. The result features smooth, advanced scroll-based
+                animations and lots of micro-interactions throughout to create a
+                more dynamic and immersive experience. It’s one of my favorite
+                projects to date, blending creative freedom with advanced
+                front-end techniques.
               </span>
             </p>
             <div className="side-padding mt-8 lg:hidden">
@@ -437,13 +439,15 @@ export default function Works({
             </h2>
             <p className="grid-system text-[max(16px,1.6vw)]!">
               <span className="col-span-4 max-md:max-w-[485px] md:min-w-[485px] xl:col-span-5">
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nobis
-                repellendus voluptatem voluptates excepturi nam. Impedit
-                reprehenderit modi totam delectus, ut a eum tempora quam omnis,
-                maiores vero molestiae labore, consequatur assumenda accusamus
-                blanditiis cum. Dolor tempora ducimus impedit nesciunt quod
-                similique magni sapiente sint! Nisi fugit provident iste
-                perspiciatis autem.
+                This is a live, client-facing website built for Ms. Haifaa Bitar
+                — a professional psychologist and psychoanalyst. The goal was to
+                elevate her online presence and position her as a standout in
+                her field. The design is clean, calm, and professional, helping
+                visitors quickly find everything they need: her services,
+                experience, contact details, and a built-in booking system.
+                Beyond just looking good, the site was built to build trust —
+                making sure potential clients feel informed, comfortable, and
+                confident to reach out.
               </span>
             </p>
             <div className="side-padding mt-8 lg:hidden">

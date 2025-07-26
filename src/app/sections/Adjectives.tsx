@@ -18,8 +18,8 @@ export default function Adjectives() {
     mediaQuery2.addEventListener("change", handler);
 
     return () => {
-      mediaQuery1.removeEventListener("change", handler)
-      mediaQuery2.removeEventListener("change", handler)
+      mediaQuery1.removeEventListener("change", handler);
+      mediaQuery2.removeEventListener("change", handler);
     };
   }, []);
 
@@ -41,38 +41,38 @@ export default function Adjectives() {
   );
 
   return (
-    <section ref={sectionRef} className="relative  h-[200vh] md:h-[300vh]">
-      <div className="z-1 display-1 text-[max(77px,12vw)]! max-2xs:text-[18vw]! sticky top-0 flex h-dvh flex-col justify-evenly overflow-hidden py-20 text-white mix-blend-difference">
+    <section ref={sectionRef} className="relative h-[200vh] md:h-[300vh]">
+      <div className="z-1 display-1 text-[max(77px,12vw)]! max-2xs:text-[18vw]! sticky top-0 flex h-dvh flex-col justify-evenly overflow-hidden py-20 text-white text-outline-white mix-blend-difference">
         <div className="relative">
           <motion.p
             style={{ left: position }}
-            className="absolute  "
+            className="absolute whitespace-nowrap"
           >
-            CREATIVE
+            C<span className="text-white">R</span>EATIVE
           </motion.p>
-          <p className="opacity-0" aria-hidden>
+          <p className="whitespace-nowrap opacity-0" aria-hidden>
             CREATIVE
           </p>
         </div>
         <div className="relative">
           <motion.p
             style={{ right: position }}
-            className="absolute "
+            className="absolute whitespace-nowrap"
           >
-            POLISHED
+            <span className="text-white">H</span>IGH-END
           </motion.p>
-          <p className="opacity-0" aria-hidden>
-            POLISHED
+          <p className="whitespace-nowrap opacity-0" aria-hidden>
+            HIGH-END
           </p>
         </div>
         <div className="relative">
           <motion.p
             style={{ left: position }}
-            className="absolute "
+            className="absolute whitespace-nowrap"
           >
             DYNAMIC
           </motion.p>
-          <p className="opacity-0" aria-hidden>
+          <p className="whitespace-nowrap opacity-0" aria-hidden>
             DYNAMIC
           </p>
         </div>
